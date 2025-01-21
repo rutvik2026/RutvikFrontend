@@ -5,7 +5,7 @@ import axios from "axios";
 import { Container } from "react-bootstrap";
 import Cardsone from "../component/Cards1";
 
-export const OwnerHome = () => {
+const OwnerHome = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -51,3 +51,5 @@ export const OwnerHome = () => {
     </div>
   );
 };
+
+export default OwnerHome;
