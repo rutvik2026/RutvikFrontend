@@ -7,7 +7,7 @@ const Restorant = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${baseUrl}/owners`);
+      const response = await axios.get(`${baseUrl}/owners`);
         const result = await response.data;
         console.log("resuit resto", result);
         setData(result);
