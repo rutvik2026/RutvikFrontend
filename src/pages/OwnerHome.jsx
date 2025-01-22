@@ -7,11 +7,11 @@ import Cardsone from "../component/Cards1";
 
 const OwnerHome = () => {
   const [data, setData] = useState([]);
-
+ const baseUrl = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/owners");
+        const response = await axios.get(`${baseUrl}/owners`);
         const result = await response.data;
         setData(result);
         console.log("fetched data", result);
