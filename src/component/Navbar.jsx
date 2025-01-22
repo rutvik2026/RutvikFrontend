@@ -1,4 +1,6 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Link } from "react-router-dom"; // Use Link for navigation
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
