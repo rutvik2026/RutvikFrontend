@@ -22,7 +22,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
-
+ const baseUrl = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
@@ -44,7 +44,7 @@ function App() {
       if (token) {
         try {
           // Replace `/api/verify-token` with your backend endpoint
-          const response = await fetch("/api/verify-token", {
+          const response = await fetch(`${baseUrl}/verify-token`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
