@@ -7,7 +7,8 @@ import { useAppointments } from "../component/AppointmentContext";
 export const Appointments = () => {
   const [id, setId] = useState(null);
   const [data, setData] = useState([]);
- 
+ const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
    const [count,setCount]=useState(false);
   // Fetch user ID from localStorage on mount
   const { appointments, updateAppointmentStatus } = useAppointments();
@@ -35,7 +36,7 @@ export const Appointments = () => {
       console.log("Fetching appointments for ownerId:", id);
       const getAppointments = async () => {
         try {
-          const response = await axios.get("/api/v1/user/appointments", {
+          const response = await axios.get(`${baseUrl}/v1/user/appointments`, {
             params: { ownerId: id },
           });
           console.log("Fetched appointments from API:", response.data);
@@ -65,7 +66,7 @@ export const Appointments = () => {
     console.log("Updated appointments:", appointments);
       try {
     const appointment = data[index]; // Assuming data is an array of appointments
-    const response = await axios.patch("/api/v1/user/updatestatusappointment", {
+    const response = await axios.patch(`${baseUrl}/v1/user/updatestatusappointment"` {
       userId: appointment.idd, // Replace with the correct field
       ownerId:id, // Replace with the correct field
       appointmentId: appointment.uniqueId1,
@@ -86,7 +87,7 @@ export const Appointments = () => {
 const removeAppointment = async (index) => {
   try {
     const appointment = data[index]; // Assuming data is an array of appointments
-    const response = await axios.post("/api/v1/user/removeappointment", {
+    const response = await axios.post(`${baseUrl}/v1/user/removeappointment`, {
       userId: appointment.idd, // Replace with the correct field
       ownerId:id, // Replace with the correct field
       appointmentId: appointment.uniqueId1, // Replace with the correct field
