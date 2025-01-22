@@ -20,6 +20,7 @@ const MyRestorant = () => {
     price: "",
     description: "",
   });
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [addMenu,setAddMenu]=useState(false)
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
@@ -35,7 +36,7 @@ const MyRestorant = () => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/v1/user/myrestorant", {
+        const response = await axios.get(`${baseUrl}/v1/user/myrestorant`, {
           params: { id },
         });
          const result = Array.isArray(response.data)
@@ -57,7 +58,7 @@ const MyRestorant = () => {
 
     const fetchMenu = async () => {
       try {
-        const response = await axios.get("/api/v1/user/menuget", {
+        const response = await axios.get(`${baseUrl}/v1/user/menuget`, {
           params: { restaurantId: id },
         });
         setMenu(response.data);
@@ -76,7 +77,7 @@ const MyRestorant = () => {
     e.preventDefault();
     
     try {
-      const response = await axios.post("/api/v1/user/menuadd", {
+      const response = await axios.post(`${baseUrl}/v1/user/menuadd`, {
         restaurantId:id,
         ...newMenuItem,
       });
@@ -89,7 +90,7 @@ const MyRestorant = () => {
   };
   const removeMenu=async(index)=>{
     try {
-      const response = await axios.post("/api/v1/user/menuremove", {
+      const response = await axios.post(`${baseUrl}/v1/user/menuremove`, {
         restaurantId: restaurant._id,
         index,
       });
