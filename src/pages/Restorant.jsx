@@ -3,11 +3,11 @@ import Cards from "../component/Cards";
 import axios from "axios";
 const Restorant = () => {
   const [data, setData] = useState([]);
-
+ const baseUrl = import.meta.env.VITE_API_BASE_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/owners");
+        const response = await axios.get(`${baseUrl}/owners`);
         const result = await response.data;
         console.log("resuit resto", result);
         setData(result);
