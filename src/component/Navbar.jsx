@@ -6,12 +6,14 @@ import Navbar from "react-bootstrap/Navbar";
 
 export const AuthContext = createContext();
 
+const navigate = useNavigate();
+
 const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("customer");
-  // Redirect the user to the login page
-  window.location.href = "/login";
+  navigate("/login"); // Navigate to the login page
 };
+
 
 function Head() {
   const [role, setRole] = useState(null);
