@@ -7,6 +7,7 @@ import axios from "axios";
 const RegistrationForm = () => {
   const navigate = useNavigate();
    const [isDisabled, setIsDisabled] = useState(false);
+   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -35,7 +36,7 @@ const RegistrationForm = () => {
 
     try {
       const res = await axios.post(
-        "/api/v1/user/register",
+        `${baseUrl}/v1/user/register`,
         data,
         {
           headers: {
