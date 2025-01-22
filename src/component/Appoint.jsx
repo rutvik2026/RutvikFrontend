@@ -14,10 +14,11 @@ const RestaurantAppointment = () => {
      const initialRestaurantName = location.state?.title || "";
      const ownerId=location.state?.id || "";
       const [menu, setMenu] = useState([]);
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
    const sendBack = async (customer) => {
      try {
        console.log("iniial id in sendBack", customer);
-       const res = await axios.post("/api/v1/user/appointmentid", customer, {
+       const res = await axios.post(`${baseUrl}/v1/user/appointmentid`, customer, {
          headers: {
            "Content-Type": "application/json",
          },
@@ -93,7 +94,7 @@ const RestaurantAppointment = () => {
 
     const fetchMenu = async () => {
       try {
-        const response = await axios.get("/api/v1/user/menuget", {
+        const response = await axios.get(`${baseUrl}/v1/user/menuget`, {
           params: { restaurantId: ownerId },
         });
         setMenu(response.data);
