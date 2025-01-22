@@ -66,7 +66,7 @@ export const Appointments = () => {
     console.log("Updated appointments:", appointments);
       try {
     const appointment = data[index]; // Assuming data is an array of appointments
-    const response = await axios.patch(`${baseUrl}/v1/user/updatestatusappointment"` {
+    const response = await axios.patch(`${baseUrl}/v1/user/updatestatusappointment`,{
       userId: appointment.idd, // Replace with the correct field
       ownerId:id, // Replace with the correct field
       appointmentId: appointment.uniqueId1,
