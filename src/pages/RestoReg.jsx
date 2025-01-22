@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const RestoRegistrationForm = () => {
+   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const [isDisabled, setIsDisabled] = useState(false);
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ const RestoRegistrationForm = () => {
     }
 
     try {
-      const res = await axios.post("/api/v1/user/restoregister", data, {
+      const res = await axios.post(`${baseUrl}/v1/user/restoregister`, data, {
         headers: {
           "Content-Type": "multipart/form-data", // Axios will automatically set the boundary
         },
