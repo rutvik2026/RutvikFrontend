@@ -1,6 +1,5 @@
-import { createContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
+import { createContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom"; // Use Link for navigation
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -8,14 +7,12 @@ import Navbar from "react-bootstrap/Navbar";
 
 export const AuthContext = createContext();
 
-const navigate = useNavigate();
-
 const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("customer");
-  navigate("/login"); // Navigate to the login page
+  // Redirect the user to the login page
+  window.location.href = "/login";
 };
-
 
 function Head() {
   const [role, setRole] = useState(null);
