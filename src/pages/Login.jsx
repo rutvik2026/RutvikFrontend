@@ -24,7 +24,8 @@ const Login = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/user/login", formData);
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const res = await axios.post(`${baseUrl}/v1/user/login`, formData);
       setIsDisabled(true);
 
       if (res.data.success) {
