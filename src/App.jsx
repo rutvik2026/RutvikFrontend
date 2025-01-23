@@ -21,16 +21,18 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-    useEffect(() => {
-    // Whenever the app is refreshed, clear any authentication data.
-    localStorage.removeItem("token");
-    localStorage.removeItem("customer");
-    localStorage.removeItem("customer");
-   sessionStorage.removeItem("customer");
-    // Reset state to logged-out
-    setIsLoggedIn(false);
-    setRole(null);
-      
+  useEffect(() => {
+    // Remove token on refresh
+    const handleBeforeUnload = () => {
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, []);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
