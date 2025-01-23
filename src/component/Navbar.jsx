@@ -1,5 +1,5 @@
 
-import { createContext, useState, useEffect, useNavigate } from "react";
+import { createContext, useState, useEffect} from "react";
 import { Link } from "react-router-dom"; // Use Link for navigation
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -8,11 +8,11 @@ import Navbar from "react-bootstrap/Navbar";
 export const AuthContext = createContext();
  
 const handleLogout = () => {
-  const navigate = useNavigate();
+ 
   localStorage.removeItem("token");
   localStorage.removeItem("customer");
   // Redirect the user to the login page
-  navigate("/login");
+
 };
 
 function Head() {
@@ -72,7 +72,7 @@ function Head() {
                 </Nav.Link>
               )}
               {isLoggedIn ? (
-                <Nav.Link className="text-white" onClick={handleLogout}>
+                <Nav.Link className="text-white" onClick={handleLogout} to="/login">
                   Logout
                 </Nav.Link>
               ) : (
