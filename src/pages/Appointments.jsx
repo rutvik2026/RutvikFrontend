@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { useAppointments } from "../component/AppointmentContext";
-
+import "./Appointment.css";
 
 export const Appointments = () => {
   const [id, setId] = useState(null);
