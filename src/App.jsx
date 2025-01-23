@@ -30,7 +30,7 @@ function App() {
     // Reset state to logged-out
     setIsLoggedIn(false);
     setRole(null);
-      window.location.href = "/";
+      
   }, []);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
