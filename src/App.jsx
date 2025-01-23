@@ -25,7 +25,8 @@ function App() {
     // Whenever the app is refreshed, clear any authentication data.
     localStorage.removeItem("token");
     localStorage.removeItem("customer");
-
+    localStorage.removeItem("customer");
+   sessionStorage.removeItem("customer");
     // Reset state to logged-out
     setIsLoggedIn(false);
     setRole(null);
@@ -56,11 +57,15 @@ function App() {
           } else {
             localStorage.removeItem("token");
             sessionStorage.removeItem("token");
+            localStorage.removeItem("customer");
+            sessionStorage.removeItem("customer");
             setIsLoggedIn(false);
           }
         } catch (error) {
           localStorage.removeItem("token");
           sessionStorage.removeItem("token");
+          localStorage.removeItem("customer");
+          sessionStorage.removeItem("customer");
           setIsLoggedIn(false);
         }
       }
@@ -77,6 +82,8 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
+    localStorage.removeItem("customer");
+    sessionStorage.removeItem("customer");
     setIsLoggedIn(false);
   };
 
