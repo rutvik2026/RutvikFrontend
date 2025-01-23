@@ -146,6 +146,8 @@ function App() {
               }
             />
               <Route path="/log" element={ <Login />} />
+              <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
             <Route path="/register" element={<RegistrationForm />} />
             <Route path="/restoreg" element={<RestoRegistrationForm />} />
 
