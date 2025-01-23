@@ -121,28 +121,28 @@ const MyApointment = () => {
             <Col xs={12} md={1}>
               <strong>Restaurant:</strong> {appointment.initialRestaurantName}
             </Col>
-            <Col xs={12} md={1}>
+            <Col xs={12} md={2}>
               <strong>Name:</strong> {appointment.name}
             </Col>
-            <Col xs={6} md={1}>
+            <Col xs={12} md={1}>
               <strong>Date:</strong> {appointment.date}
             </Col>
-            <Col xs={6} md={1}>
+            <Col xs={12} md={2}>
               <strong>Time:</strong> {appointment.time}
             </Col>
             <Col xs={12} md={1}>
               <strong>Items:</strong> {appointment.Items}
             </Col>
-            <Col xs={6} md={1}>
+            <Col xs={12} md={1}>
               <strong>Guests:</strong> {appointment.guests}
             </Col>
-            <Col xs={6} md={1}>
+            <Col xs={12} md={1}>
               <strong>Price:</strong> {appointment.price}
             </Col>
             <Col xs={12} md={1}>
               <strong>Status:</strong> {appointment.status}
             </Col>
-            <Col xs={12} md={2}>
+            <Col xs={12} md={1}>
               <Button
                 variant="danger"
                 size="sm"
@@ -151,6 +151,9 @@ const MyApointment = () => {
               >
                 Cancel
               </Button>
+             
+            </Col>
+             <Col xs={12} md={1}>
               {appointment.status === "accepted" && (
                 <Button
                   variant="success"
