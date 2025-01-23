@@ -26,9 +26,17 @@ const navigate = useNavigate();
 
   // Redirect to `/` on initial load, only if not already on `/`
   useEffect(() => {
-    if (window.location.pathname !== "/") {
-      navigate("/");
+    const token = localStorage.getItem("token");
+
+    // If the user is logged in, redirect them to "/"
+    if (token) {
+      setIsLoggedIn(true);
+      navigate("/"); // Redirect logged-in user to the home page
+    } else {
+      setIsLoggedIn(false);
     }
+
+    setIsAuthChecked(true); // Once authentication status is checked, set it to true
   }, [navigate]);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
