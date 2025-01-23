@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import React from "react";
 import { useAppointments } from "../component/AppointmentContext";
-
+import "./MyAppointments.css";
 const MyApointment = () => {
   const [id, setId] = useState(null);
   const [data, setData] = useState([]); 
