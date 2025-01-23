@@ -1,23 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Row, Col, Button, Container } from "react-bootstrap";
-
+import { Row, Col } from "react-bootstrap";
+import React from "react";
 import { useAppointments } from "../component/AppointmentContext";
-import "./MyAppointments.css"; // Custom styles for further adjustments
 
 const MyApointment = () => {
   const [id, setId] = useState(null);
-  const [data, setData] = useState([]);
-  const { appointments, updateAppointmentStatus } = useAppointments();
-  const [count, setCount] = useState(false);
+  const [data, setData] = useState([]); 
+  const { appointments, updateAppointmentStatus } = useAppointments(); 
+  const [count,setCount]=useState(false);
+   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
 
   useEffect(() => {
+    console.log("uodated id", appointments);
+  }, [appointments]);
+  useEffect(() => {
+    
     const fetchUserId = () => {
       try {
         const customerData = localStorage.getItem("customer");
         if (customerData) {
           const { id } = JSON.parse(customerData);
-          setId(id);
+          setId(id); 
         }
       } catch (error) {
         console.error("Error parsing customer data:", error);
@@ -29,12 +34,13 @@ const MyApointment = () => {
 
   useEffect(() => {
     if (id) {
+      // Fetch appointment history based on user ID
       const getAppointmentHistory = async () => {
         try {
-          const response = await axios.get("/api/v1/user/appointmenthistory", {
+          const response = await axios.get(`${baseUrl}/v1/user/appointmenthistory`, {
             params: { userId: id },
           });
-          setData(response.data);
+          setData(response.data); // Set fetched data
         } catch (error) {
           console.error("Error fetching appointment history:", error);
         }
@@ -42,51 +48,55 @@ const MyApointment = () => {
 
       getAppointmentHistory();
     }
-  }, [id, count]);
+  }, [id,count]);
 
   const removeAppointment = async (index) => {
     try {
-      const appointment = data[index];
-      await axios.post("/api/v1/user/removeappointment", {
-        userId: appointment.idd,
-        ownerId: appointment.ownerId,
-        appointmentId: appointment.uniqueId1,
+      const appointment = data[index]; // Assuming data is an array of appointments
+      const response = await axios.post(`${baseUrl}/v1/user/removeappointment`, {
+        userId: appointment.idd, // Replace with the correct field
+        ownerId: appointment.ownerId, // Replace with the correct field
+        appointmentId: appointment.uniqueId1, // Replace with the correct field
       });
       setCount(!count);
+
+      console.log("Appointment removed successfully:", response.data);
     } catch (error) {
       console.error("Error removing appointment:", error);
     }
   };
-
   const payAppointment = async (index) => {
     try {
-      const appointment = data[index];
+      const appointment = data[index]; // Assuming data is an array of appointments
       const number = "9657979917";
 
       const makePaymentRequest = async (retryCount = 0) => {
         try {
-          await axios.post("/api/v1/user/paymentgateway", {
-            username: appointment.name,
-            appointmentPrice: appointment.price,
+          const response = await axios.post(`${baseUrl}/v1/user/paymentgateway`, {
+            username: appointment.name, // Replace with the correct field
+            appointmentPrice: appointment.price, // Replace with the correct field
             number,
           });
+          console.log("Payment Successful:", response.data);
         } catch (error) {
           if (error.response?.status === 429 && retryCount < 3) {
-            const waitTime = Math.pow(2, retryCount) * 1000;
-            await new Promise((resolve) => setTimeout(resolve, waitTime));
-            await makePaymentRequest(retryCount + 1);
+            console.warn(
+              `Rate limit hit. Retrying... Attempt ${retryCount + 1}`
+            );
+            const waitTime = Math.pow(2, retryCount) * 1000; // Exponential backoff
+            await new Promise((resolve) => setTimeout(resolve, waitTime)); // Wait before retrying
+            await makePaymentRequest(retryCount + 1); // Retry with incremented count
           } else {
             console.error("Error during payment:", error);
           }
         }
       };
 
-      await makePaymentRequest();
+      await makePaymentRequest(); // Call the payment request with retry logic
     } catch (error) {
       console.error("Unexpected error during payment:", error);
     }
   };
-
   return (
     <Container className="mt-4">
       <h1 className="text-center mb-4">My Appointments</h1>
