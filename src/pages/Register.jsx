@@ -123,7 +123,7 @@ const RegistrationForm = () => {
           Register
         </Button>
         <br />
-        <Link to={"/login"}>Go to Login</Link>
+        <Link to={"/"}>Go to Login</Link>
         <br />
         <Link to={"/restoreg"}>Register as Restaurant Owner</Link>
       </Form>
