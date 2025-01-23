@@ -72,7 +72,7 @@ function Head() {
                 </Nav.Link>
               )}
               {isLoggedIn ? (
-                <Nav.Link className="text-white" onClick={handleLogout} to="/login">
+                <Nav.Link className="text-white" onClick={handleLogout} to="/">
                   Logout
                 </Nav.Link>
               ) : (
