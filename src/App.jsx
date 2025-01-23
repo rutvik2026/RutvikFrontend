@@ -6,7 +6,7 @@ import MyApointment from "./pages/MyApointment";
 import Restorant from "./pages/Restorant";
 import Login from "./pages/Login";
 
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RegistrationForm from "./pages/Register";
 import RestoRegistrationForm from "./pages/RestoReg";
@@ -22,7 +22,14 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
+const navigate = useNavigate();
 
+  // Redirect to `/` on initial load, only if not already on `/`
+  useEffect(() => {
+    if (window.location.pathname !== "/") {
+      navigate("/");
+    }
+  }, [navigate]);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
