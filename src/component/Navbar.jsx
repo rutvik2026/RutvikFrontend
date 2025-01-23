@@ -12,7 +12,7 @@ const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("customer");
   // Redirect the user to the login page
-
+   window.location.href = "/";
 };
 
 function Head() {
@@ -72,7 +72,7 @@ function Head() {
                 </Nav.Link>
               )}
               {isLoggedIn ? (
-                <Nav.Link className="text-white" onClick={handleLogout} to="/">
+                <Nav.Link className="text-white" onClick={handleLogout}>
                   Logout
                 </Nav.Link>
               ) : (
