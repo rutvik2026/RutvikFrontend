@@ -1,28 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Row, Col } from "react-bootstrap";
-import React from "react";
+import { Row, Col, Button, Container } from "react-bootstrap";
+
 import { useAppointments } from "../component/AppointmentContext";
+import "./MyAppointments.css"; // Custom styles for further adjustments
 
 const MyApointment = () => {
   const [id, setId] = useState(null);
-  const [data, setData] = useState([]); 
-  const { appointments, updateAppointmentStatus } = useAppointments(); 
-  const [count,setCount]=useState(false);
-   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
+  const [data, setData] = useState([]);
+  const { appointments, updateAppointmentStatus } = useAppointments();
+  const [count, setCount] = useState(false);
 
   useEffect(() => {
-    console.log("uodated id", appointments);
-  }, [appointments]);
-  useEffect(() => {
-    
     const fetchUserId = () => {
       try {
         const customerData = localStorage.getItem("customer");
         if (customerData) {
           const { id } = JSON.parse(customerData);
-          setId(id); 
+          setId(id);
         }
       } catch (error) {
         console.error("Error parsing customer data:", error);
@@ -34,13 +29,12 @@ const MyApointment = () => {
 
   useEffect(() => {
     if (id) {
-      // Fetch appointment history based on user ID
       const getAppointmentHistory = async () => {
         try {
-          const response = await axios.get(`${baseUrl}/v1/user/appointmenthistory`, {
+          const response = await axios.get("/api/v1/user/appointmenthistory", {
             params: { userId: id },
           });
-          setData(response.data); // Set fetched data
+          setData(response.data);
         } catch (error) {
           console.error("Error fetching appointment history:", error);
         }
@@ -48,129 +42,122 @@ const MyApointment = () => {
 
       getAppointmentHistory();
     }
-  }, [id,count]);
+  }, [id, count]);
 
   const removeAppointment = async (index) => {
     try {
-      const appointment = data[index]; // Assuming data is an array of appointments
-      const response = await axios.post(`${baseUrl}/v1/user/removeappointment`, {
-        userId: appointment.idd, // Replace with the correct field
-        ownerId: appointment.ownerId, // Replace with the correct field
-        appointmentId: appointment.uniqueId1, // Replace with the correct field
+      const appointment = data[index];
+      await axios.post("/api/v1/user/removeappointment", {
+        userId: appointment.idd,
+        ownerId: appointment.ownerId,
+        appointmentId: appointment.uniqueId1,
       });
       setCount(!count);
-
-      console.log("Appointment removed successfully:", response.data);
     } catch (error) {
       console.error("Error removing appointment:", error);
     }
   };
+
   const payAppointment = async (index) => {
     try {
-      const appointment = data[index]; // Assuming data is an array of appointments
+      const appointment = data[index];
       const number = "9657979917";
 
       const makePaymentRequest = async (retryCount = 0) => {
         try {
-          const response = await axios.post(`${baseUrl}/v1/user/paymentgateway`, {
-            username: appointment.name, // Replace with the correct field
-            appointmentPrice: appointment.price, // Replace with the correct field
+          await axios.post("/api/v1/user/paymentgateway", {
+            username: appointment.name,
+            appointmentPrice: appointment.price,
             number,
           });
-          console.log("Payment Successful:", response.data);
         } catch (error) {
           if (error.response?.status === 429 && retryCount < 3) {
-            console.warn(
-              `Rate limit hit. Retrying... Attempt ${retryCount + 1}`
-            );
-            const waitTime = Math.pow(2, retryCount) * 1000; // Exponential backoff
-            await new Promise((resolve) => setTimeout(resolve, waitTime)); // Wait before retrying
-            await makePaymentRequest(retryCount + 1); // Retry with incremented count
+            const waitTime = Math.pow(2, retryCount) * 1000;
+            await new Promise((resolve) => setTimeout(resolve, waitTime));
+            await makePaymentRequest(retryCount + 1);
           } else {
             console.error("Error during payment:", error);
           }
         }
       };
 
-      await makePaymentRequest(); // Call the payment request with retry logic
+      await makePaymentRequest();
     } catch (error) {
       console.error("Unexpected error during payment:", error);
     }
   };
 
   return (
-    <>
-      <h1 className="mt-4">My Appointments</h1>
-      <Row className="mt-4">
-        <Col>
-          <h2>Restaurant Name</h2>
-        </Col>
-        <Col>
-          <h2>Name</h2>
-        </Col>
-        <Col>
-          <h2>Date</h2>
-        </Col>
-        <Col>
-          <h2>Time</h2>
-        </Col>
-        <Col>
-          <h2>Items</h2>
-        </Col>
-        <Col>
-          <h2>Guests</h2>
-        </Col>
-        <Col>
-          <h2>Price</h2>
-        </Col>
-        <Col>
-          <h2>Status</h2>
-        </Col>
-        <Col>
-          <h2>Action</h2>
-        </Col>
+    <Container className="mt-4">
+      <h1 className="text-center mb-4">My Appointments</h1>
+      <Row className="font-weight-bold text-center d-none d-md-flex">
+        <Col>Restaurant Name</Col>
+        <Col>Name</Col>
+        <Col>Date</Col>
+        <Col>Time</Col>
+        <Col>Items</Col>
+        <Col>Guests</Col>
+        <Col>Price</Col>
+        <Col>Status</Col>
+        <Col>Action</Col>
       </Row>
-      <Row>
-        {data.length > 0 ? (
-          data.map((appointment, index) => (
-            <React.Fragment key={appointment._id}>
-              <Col>{appointment.initialRestaurantName}</Col>
-              <Col>{appointment.name}</Col>
-              <Col>{appointment.date}</Col>
-              <Col>{appointment.time}</Col>
-              <Col>{appointment.Items}</Col>
-              <Col>{appointment.guests}</Col>
-              <Col>{appointment.price}</Col>
-              <Col>{appointment.status}</Col>
-              <Col>
-                <button
-                  className="mr-2"
-                  onClick={() => removeAppointment(index)}
+      <hr />
+      {data.length > 0 ? (
+        data.map((appointment, index) => (
+          <Row
+            key={appointment._id}
+            className="align-items-center text-center mb-3 appointment-row"
+          >
+            <Col xs={12} md={1}>
+              <strong>Restaurant:</strong> {appointment.initialRestaurantName}
+            </Col>
+            <Col xs={12} md={1}>
+              <strong>Name:</strong> {appointment.name}
+            </Col>
+            <Col xs={6} md={1}>
+              <strong>Date:</strong> {appointment.date}
+            </Col>
+            <Col xs={6} md={1}>
+              <strong>Time:</strong> {appointment.time}
+            </Col>
+            <Col xs={12} md={1}>
+              <strong>Items:</strong> {appointment.Items}
+            </Col>
+            <Col xs={6} md={1}>
+              <strong>Guests:</strong> {appointment.guests}
+            </Col>
+            <Col xs={6} md={1}>
+              <strong>Price:</strong> {appointment.price}
+            </Col>
+            <Col xs={12} md={1}>
+              <strong>Status:</strong> {appointment.status}
+            </Col>
+            <Col xs={12} md={2}>
+              <Button
+                variant="danger"
+                size="sm"
+                className="m-1"
+                onClick={() => removeAppointment(index)}
+              >
+                Cancel
+              </Button>
+              {appointment.status === "accepted" && (
+                <Button
+                  variant="success"
+                  size="sm"
+                  className="m-1"
+                  onClick={() => payAppointment(index)}
                 >
-                  Cancel
-                </button>
-              </Col>
-              <Col>
-                {appointment.status === "accepted" ? (
-                  <button
-                    className="mr-2"
-                    onClick={() => payAppointment(index)}
-                  >
-                    Pay
-                  </button>
-                ) : (
-                  ""
-                )}
-              </Col>
-
-              <hr />
-            </React.Fragment>
-          ))
-        ) : (
-          <p>No appointments available</p>
-        )}
-      </Row>
-    </>
+                  Pay
+                </Button>
+              )}
+            </Col>
+          </Row>
+        ))
+      ) : (
+        <p className="text-center">No appointments available</p>
+      )}
+    </Container>
   );
 };
 
