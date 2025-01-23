@@ -21,19 +21,19 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-  useEffect(() => {
-    // Remove token on refresh
-    const handleBeforeUnload = () => {
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("token");
-    };
+ useEffect(() => {
+  // Check if the page is being refreshed
+  const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+  if (isRefresh) {
+    // Clear tokens on refresh
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("customer");
+    sessionStorage.removeItem("customer");
+  }
+}, []);
 
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
