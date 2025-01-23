@@ -1,12 +1,12 @@
 .register{
-    width: 30vw;
+    width: 60vw;
     border: 1px solid black;
     border-radius: 2rem;
     height: 95vh;
 }
 .login{
     margin-top: 10vh;
-     width: 30vw;
+     width: 60vw;
     border: 1px solid black;
     border-radius: 2rem;
     height: 60vh;
