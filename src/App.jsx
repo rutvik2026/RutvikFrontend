@@ -57,15 +57,13 @@ function App() {
           } else {
             localStorage.removeItem("token");
             sessionStorage.removeItem("token");
-            localStorage.removeItem("customer");
-            sessionStorage.removeItem("customer");
+           
             setIsLoggedIn(false);
           }
         } catch (error) {
           localStorage.removeItem("token");
           sessionStorage.removeItem("token");
-          localStorage.removeItem("customer");
-          sessionStorage.removeItem("customer");
+         
           setIsLoggedIn(false);
         }
       }
@@ -73,7 +71,18 @@ function App() {
     };
     checkAuthStatus();
   }, []);
+    useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("token");
+      setIsLoggedIn(!!token);
+    };
 
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
   const handleLogin = (token) => {
     localStorage.setItem("token", token);
     setIsLoggedIn(true);
