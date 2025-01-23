@@ -21,7 +21,15 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+    useEffect(() => {
+    // Whenever the app is refreshed, clear any authentication data.
+    localStorage.removeItem("token");
+    localStorage.removeItem("customer");
 
+    // Reset state to logged-out
+    setIsLoggedIn(false);
+    setRole(null);
+  }, []);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
