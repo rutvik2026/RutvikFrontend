@@ -16,7 +16,7 @@ import Head from "./component/Navbar";
 import MyRestorant from "./pages/MyRestorant";
 import { Appointments } from "./pages/Appointments";
 import { AppointmentProvider } from "./component/AppointmentContext";
-import OwnerHome from "./pages/OwnerHome";
+import { OwnerHome } from "./pages/OwnerHome";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
