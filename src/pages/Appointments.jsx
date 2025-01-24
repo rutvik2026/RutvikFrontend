@@ -110,6 +110,7 @@ const removeAppointment = async (index) => {
         <Col>Items</Col>
         <Col>Guests</Col>
         <Col>Price</Col>
+        <Col>Ststus</Col>
         <Col>Actions</Col>
         <Col>Actions</Col>
       </Row>
@@ -135,8 +136,11 @@ const removeAppointment = async (index) => {
             <Col xs={12} md={1} className="text-center">
               <strong>Guests:</strong> {appointment.guests || "N/A"}
             </Col>
-            <Col xs={12} md={2} className="text-center">
+            <Col xs={12} md={1} className="text-center">
               <strong>Price:</strong> {appointment.price || "N/A"}
+            </Col>
+             <Col xs={12} md={1} className="text-center">
+              <strong>Status:</strong> {appointment.status || "N/A"}
             </Col>
             <Col xs={6} md={1} className="text-center">
               <Button
