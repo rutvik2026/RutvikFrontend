@@ -74,7 +74,7 @@ export const Appointments = () => {
     index: index,
   });
    
-   
+    setCount(!count);
     console.log("Appointment status is updated successfully:", response.data);
   } catch (error) {
     console.error("Error in status updation:", error);
