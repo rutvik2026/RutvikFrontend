@@ -80,7 +80,7 @@ const handlePayment = async (index) => {
   const config = {
     method: "post",
     maxBodyLength: Infinity,
-    url: "/api/v1/user/orders",
+    url:`${baseUrl}/v1/user/orders`,
     headers: {
       "Content-Type": "application/json", // Fixed typo: "application/ison" -> "application/json"
     },
