@@ -9,6 +9,7 @@ const MyApointment = () => {
   const [data, setData] = useState([]); 
   const { appointments, updateAppointmentStatus } = useAppointments(); 
   const [count,setCount]=useState(false);
+   const [isPaymentComplete,setIsPaymentComplete]=useState(false);
    const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 
@@ -140,6 +141,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
         response.razorpay_payment_id
       );
       setResponse_Id(response.razorpay_payment_id); // Update response ID
+      setIsPaymentComplete(true);
     },
     prefill: {
       name: appointment.initialRestaurantName,
@@ -219,6 +221,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
                   size="sm"
                   className="m-1"
                   onClick={() =>handlePayment(index)}
+                  disabled={isPaymentComplete}
                 >
                   Pay
                 </Button>
