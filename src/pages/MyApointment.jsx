@@ -65,38 +65,97 @@ const MyApointment = () => {
       console.error("Error removing appointment:", error);
     }
   };
-  const payAppointment = async (index) => {
-    try {
-      const appointment = data[index]; // Assuming data is an array of appointments
-      const number = "9657979917";
 
-      const makePaymentRequest = async (retryCount = 0) => {
-        try {
-          const response = await axios.post(`${baseUrl}/v1/user/paymentgateway`, {
-            username: appointment.name, // Replace with the correct field
-            appointmentPrice: appointment.price, // Replace with the correct field
-            number,
-          });
-          console.log("Payment Successful:", response.data);
-        } catch (error) {
-          if (error.response?.status === 429 && retryCount < 3) {
-            console.warn(
-              `Rate limit hit. Retrying... Attempt ${retryCount + 1}`
-            );
-            const waitTime = Math.pow(2, retryCount) * 1000; // Exponential backoff
-            await new Promise((resolve) => setTimeout(resolve, waitTime)); // Wait before retrying
-            await makePaymentRequest(retryCount + 1); // Retry with incremented count
-          } else {
-            console.error("Error during payment:", error);
-          }
-        }
-      };
+const handlePayment = async (index) => {
+  const appointment = data[index];
+  console.log("Data for appointment:", appointment.price);
+  const fac = appointment.price/4;
+  const requestdata = JSON.stringify({
+    amount:fac * 100, // Convert to smallest currency unit (paise)
+    currency: "INR",
+  });
 
-      await makePaymentRequest(); // Call the payment request with retry logic
-    } catch (error) {
-      console.error("Unexpected error during payment:", error);
-    }
+  console.log("Client-side amount data:", requestdata);
+
+  const config = {
+    method: "post",
+    maxBodyLength: Infinity,
+    url: "/api/v1/user/orders",
+    headers: {
+      "Content-Type": "application/json", // Fixed typo: "application/ison" -> "application/json"
+    },
+    data:requestdata,
   };
+
+  try {
+    const response = await axios.request(config);
+    console.log("Response from server:", JSON.stringify(response.data));
+
+    // Call the Razorpay payment screen
+    handleRazorpayScreen(response.data.amount, appointment);
+  } catch (error) {
+    console.error("Error while creating payment order:", error);
+  }
+};
+
+const loadScript = (src) => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      console.log(`Script loaded: ${src}`);
+      resolve(true);
+    };
+    script.onerror = () => {
+      console.error(`Script failed to load: ${src}`);
+      reject(false);
+    };
+    document.body.appendChild(script);
+  });
+};
+
+const handleRazorpayScreen = async (amount, appointment) => {
+  // Load Razorpay script
+  const isScriptLoaded = await loadScript(
+    "https://checkout.razorpay.com/v1/checkout.js"
+  );
+  if (!isScriptLoaded) {
+    alert(
+      "Failed to load Razorpay SDK. Please check your internet connection."
+    );
+    return;
+  }
+
+  console.log("Razorpay script successfully loaded.");
+
+  // Razorpay options
+  const options = {
+    key: "rzp_live_H2YbNsMpB8KRqc", // Replace with your live Razorpay key
+    amount: amount, // Amount in paise
+    currency: "INR",
+    name: appointment.initialRestaurantName,
+    handler: function (response) {
+      console.log(
+        "Payment successful! Razorpay Payment ID:",
+        response.razorpay_payment_id
+      );
+      setResponse_Id(response.razorpay_payment_id); // Update response ID
+    },
+    prefill: {
+      name: appointment.initialRestaurantName,
+      contact: "9657079917", // Replace with user contact information
+    },
+    theme: {
+      color: "#f4c430",
+    },
+  };
+
+  // Initialize Razorpay and open payment screen
+  const paymentObject = new window.Razorpay(options);
+  paymentObject.open();
+};
+
+  
   return (
     <Container className="mt-4">
       <h1 className="text-center mb-4">My Appointments</h1>
