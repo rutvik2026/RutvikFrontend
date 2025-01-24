@@ -218,7 +218,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
                   variant="success"
                   size="sm"
                   className="m-1"
-                  onClick={() => payAppointment(index)}
+                  onClick={() =>handlePayment(index)}
                 >
                   Pay
                 </Button>
