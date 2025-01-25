@@ -12,10 +12,12 @@ export const Home = () => {
     const fetchData = async () => {
       try {
         const baseUrl = import.meta.env.VITE_API_BASE_URL;
-        const response = await axios.get(`${baseUrl}/owners?q=${query}`);
+        const response = await axios.get(`${baseUrl}/owners`, {
+          params: { q: query }, // Pass query as params
+        });
         const result = await response.data;
         setData(result);
-        console.log("fetched data",result);
+        console.log("fetched data1",result);
       } catch (error) {
         console.error("Error retrieving data:", error);
       }
