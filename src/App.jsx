@@ -4,7 +4,7 @@ import { Home } from "./pages/Home";
 import MyApointment from "./pages/MyApointment";
 import Restorant from "./pages/Restorant";
 import Login from "./pages/Login.jsx";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RegistrationForm from "./pages/Register";
 import RestoRegistrationForm from "./pages/RestoReg";
@@ -16,28 +16,31 @@ import { Appointments } from "./pages/Appointments";
 import { AppointmentProvider } from "./component/AppointmentContext";
 import OwnerHome from "./pages/OwnerHome";
 
+function RedirectOnRefresh() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
+    if (isRefresh) {
+      // Clear tokens and other relevant data on refresh
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      localStorage.removeItem("customer");
+      sessionStorage.removeItem("customer");
+
+      // Redirect to the home route after refresh
+      navigate("/", { replace: true });
+    }
+  }, [navigate]);
+
+  return null;
+}
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-useEffect(() => {
-  // Detect if the page is refreshed
-  const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
-
-  if (isRefresh) {
-    // Clear tokens and other relevant data on refresh
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
-    localStorage.removeItem("customer");
-    sessionStorage.removeItem("customer");
-
-    // Update logged-in state and call the logout handler
-    setIsLoggedIn(false);
-    handleLogout();
-  }
-}, []);
-
 
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
@@ -65,13 +68,11 @@ useEffect(() => {
           } else {
             localStorage.removeItem("token");
             sessionStorage.removeItem("token");
-           
             setIsLoggedIn(false);
           }
         } catch (error) {
           localStorage.removeItem("token");
           sessionStorage.removeItem("token");
-         
           setIsLoggedIn(false);
         }
       }
@@ -79,7 +80,8 @@ useEffect(() => {
     };
     checkAuthStatus();
   }, []);
-    useEffect(() => {
+
+  useEffect(() => {
     const handleStorageChange = () => {
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token);
@@ -91,6 +93,7 @@ useEffect(() => {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
   const handleLogin = (token) => {
     localStorage.setItem("token", token);
     setIsLoggedIn(true);
@@ -110,6 +113,7 @@ useEffect(() => {
 
   return (
     <BrowserRouter>
+      <RedirectOnRefresh />
       <AppointmentProvider>
         {isLoggedIn ? <Head onLogout={handleLogout} /> : null}
 
@@ -128,10 +132,9 @@ useEffect(() => {
               )
             }
           />
-
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/restoreg" element={<RestoRegistrationForm />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route
             path="/home"
             element={<Protected isLoggedIn={isLoggedIn}><Home /></Protected>}
