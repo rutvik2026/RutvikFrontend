@@ -34,7 +34,7 @@ fetchData();
         <input
         type="text"
         value={query}
-        className="mt-2 custom-input"
+        className="mt-4 custom-input"
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search menu items"
       />
