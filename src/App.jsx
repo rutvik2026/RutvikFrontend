@@ -31,6 +31,7 @@ function App() {
     sessionStorage.removeItem("token");
     localStorage.removeItem("customer");
     sessionStorage.removeItem("customer");
+    handleLogout();
   }
 }, []);
 
