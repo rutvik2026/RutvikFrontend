@@ -15,6 +15,7 @@ export const Home = () => {
     const response = await axios.get(`${baseUrl}/owners/home`, {
       params: { q: query }, // Pass query as a parameter (recommended)
     });
+     console.log("Query:", query);
     const result = response.data; // No need for `await` here
     setData(result);
     console.log("Fetched data:", result);
