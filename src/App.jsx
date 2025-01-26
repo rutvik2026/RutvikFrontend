@@ -34,7 +34,12 @@ function App() {
     sessionStorage.removeItem("customer");
   }
 }, []);
-
+ useEffect(() => {
+   localStorage.removeItem("token");
+   sessionStorage.removeItem("token");
+   localStorage.removeItem("customer");
+   sessionStorage.removeItem("customer");
+ }, []);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
