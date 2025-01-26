@@ -12,7 +12,7 @@ export const Home = () => {
    const fetchData = async () => {
   try {
     const baseUrl = import.meta.env.VITE_API_BASE_URL; // Fetch the base URL from environment variables
-    const response = await axios.get(`${baseUrl}/owners/home`, {
+    const response = await axios.get(`${baseUrl}/api/owners/home`, {
       params: { q: query }, // Pass query as a parameter (recommended)
     });
     const result = response.data; // No need for `await` here
