@@ -5,7 +5,7 @@ import { Home } from "./pages/Home";
 import MyApointment from "./pages/MyApointment";
 import Restorant from "./pages/Restorant";
 import Login from "./pages/Login.jsx";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate,useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RegistrationForm from "./pages/Register";
 import RestoRegistrationForm from "./pages/RestoReg";
