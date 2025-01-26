@@ -12,7 +12,7 @@ export const Home = () => {
     const fetchData = async () => {
       try {
         const baseUrl = import.meta.env.VITE_API_BASE_URL;
-        const response = await axios.get(`${baseUrl}/api/`, {
+        const response = await axios.get(`${baseUrl}/api/owners/home`, {
           params: { q: query }, // Pass query as params
         });
         const result = await response.data;
