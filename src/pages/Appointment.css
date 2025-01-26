@@ -23,6 +23,24 @@
     font-size: 1.5rem;
   }
 
+
+  
+
+.custom-input {
+  border-radius: 12px; /* Set border radius */
+  border: 1px solid #ccc; /* Default border color */
+  transition: border-color 0.3s ease; /* Smooth transition for the color change */
+}
+
+.custom-input:hover {
+  border-color: #007bff; /* Change border color when hovered (Bootstrap primary color) */
+}
+
+.custom-input:focus {
+  border-color: #0056b3; /* Focused border color */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: Add a subtle shadow on focus */
+}
+
   .appointment-row {
     padding: 10px;
   }
