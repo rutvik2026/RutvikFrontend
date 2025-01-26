@@ -1,11 +1,12 @@
 
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Home } from "./pages/Home";
 import MyApointment from "./pages/MyApointment";
 import Restorant from "./pages/Restorant";
 import Login from "./pages/Login.jsx";
-import { BrowserRouter, Route, Routes, Navigate,useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RegistrationForm from "./pages/Register";
 import RestoRegistrationForm from "./pages/RestoReg";
@@ -17,26 +18,27 @@ import { Appointments } from "./pages/Appointments";
 import { AppointmentProvider } from "./component/AppointmentContext";
 import OwnerHome from "./pages/OwnerHome";
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-  const navigate = useNavigate();
- useEffect(() => {
-    const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
-    if (isRefresh) {
-      // Clear tokens and other relevant data on refresh
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("token");
-      localStorage.removeItem("customer");
-      sessionStorage.removeItem("customer");
+useEffect(() => {
+  // Detect if the page is refreshed
+  const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
 
-      // Redirect to the home route after refresh
-      navigate("/", { replace: true });
-    }
-  }, [navigate]);
+  if (isRefresh) {
+    // Clear tokens and other relevant data on refresh
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("customer");
+    sessionStorage.removeItem("customer");
+
+    // Update logged-in state and call the logout handler
+    setIsLoggedIn(false);
+    handleLogout();
+  }
+}, []);
 
 
   useEffect(() => {
@@ -110,7 +112,6 @@ function App() {
 
   return (
     <BrowserRouter>
-       
       <AppointmentProvider>
         {isLoggedIn ? <Head onLogout={handleLogout} /> : null}
 
