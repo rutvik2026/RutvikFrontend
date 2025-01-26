@@ -7,7 +7,7 @@ const Protected = ({ children }) => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/", { replace: true }); // Redirect to login if not logged in
+      navigate("/login", { replace: true }); // Redirect to login if not logged in
     }
   }, [isLoggedIn, navigate]);
 
