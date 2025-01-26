@@ -23,23 +23,7 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-useEffect(() => {
-  // Detect if the page is refreshed
-  const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
 
-  if (isRefresh) {
-    // Clear tokens and other relevant data on refresh
-    console.log("refresh occure1");
-    localStorage.removeItem("token");
-    sessionStorage.removeItem("token");
-    localStorage.removeItem("customer");
-    sessionStorage.removeItem("customer");
-
-    // Update logged-in state and call the logout handler
-    setIsLoggedIn(false);
-    handleLogout();
-  }
-}, []);
 
 
   useEffect(() => {
