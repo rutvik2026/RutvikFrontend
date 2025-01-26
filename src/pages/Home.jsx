@@ -9,21 +9,23 @@ export const Home = () => {
   const [query, setQuery] = useState('');
   useEffect(() => {
     
-    const fetchData = async () => {
-      try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL;
-        const response = await axios.get(`${baseUrl}/owners/home?q=${query}` 
-        });
-        const result = await response.data;
-        setData(result);
-        console.log("fetched data1",result);
-      } catch (error) {
-        console.error("Error retrieving data:", error);
-      }
-    };
+   const fetchData = async () => {
+  try {
+    const baseUrl = import.meta.env.VITE_API_BASE_URL; // Fetch the base URL from environment variables
+    const response = await axios.get(`${baseUrl}/owners/home`, {
+      params: { q: query }, // Pass query as a parameter (recommended)
+    });
+    const result = response.data; // No need for `await` here
+    setData(result);
+    console.log("Fetched data:", result);
+  } catch (error) {
+    console.error("Error retrieving data:", error);
+  }
+};
 
-    fetchData();
-  }, [query]);
+fetchData();
+}, [query]); // Dependency array ensures it refetches when `query` changes
+
 
   return (
     <div className="d-flex flex-wrap mt-3 justify-content-center">
