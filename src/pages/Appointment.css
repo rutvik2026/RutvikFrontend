@@ -27,7 +27,7 @@
   
 
 .custom-input {
-  border-radius: 12px; /* Set border radius */
+  border-radius: 25px; /* Set border radius */
   border: 1px solid #ccc; /* Default border color */
   transition: border-color 0.3s ease; /* Smooth transition for the color change */
 }
