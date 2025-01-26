@@ -1,5 +1,4 @@
 
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Home } from "./pages/Home";
@@ -23,8 +22,18 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
+ useEffect(() => {
+  // Check if the page is being refreshed
+  const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
 
-
+  if (isRefresh) {
+    // Clear tokens on refresh
+    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
+    localStorage.removeItem("customer");
+    sessionStorage.removeItem("customer");
+  }
+}, []);
 
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
