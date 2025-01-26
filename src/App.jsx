@@ -29,6 +29,7 @@ useEffect(() => {
 
   if (isRefresh) {
     // Clear tokens and other relevant data on refresh
+    console.log("refresh occure1");
     localStorage.removeItem("token");
     sessionStorage.removeItem("token");
     localStorage.removeItem("customer");
