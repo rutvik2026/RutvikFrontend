@@ -3,6 +3,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Home } from "./pages/Home";
+import { PreHome } from "./pages/PreHome";
 import MyApointment from "./pages/MyApointment";
 import Restorant from "./pages/Restorant";
 import Login from "./pages/Login.jsx";
@@ -128,7 +129,7 @@ function App() {
                   <Navigate to="/ownerhome" replace />
                 )
               ) : (
-               <Login onLogin={handleLogin} />
+               <Navigate to="/prehome" replace />
               )
             }
           />
@@ -146,6 +147,7 @@ function App() {
                 )
               }
             />
+           <Route path="/prehome" element={<PreHome />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/restoreg" element={<RestoRegistrationForm />} />
            
