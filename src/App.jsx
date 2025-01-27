@@ -25,6 +25,22 @@ function App() {
  useEffect(()=>{
    handleLogout();
  },[]);
+
+   useEffect(() => {
+    // Detect if the page is refreshed
+    const isRefresh = performance.getEntriesByType("navigation")[0]?.type === "reload";
+
+    if (isRefresh) {
+      // Clear tokens on refresh
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      localStorage.removeItem("customer");
+      sessionStorage.removeItem("customer");
+
+      // Redirect to /login
+      <Navigate to="/login" />
+    }
+  }, []);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
