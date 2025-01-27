@@ -132,10 +132,23 @@ function App() {
               )
             }
           />
-
+             <Route
+              path="/login"
+              element={
+                isLoggedIn ? (
+                  role === "user" ? (
+                    <Navigate to="/home" replace />
+                  ) : (
+                    <Navigate to="/ownerhome" replace />
+                  )
+                ) : (
+                  <Login onLogin={handleLogin} />
+                )
+              }
+            />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/restoreg" element={<RestoRegistrationForm />} />
-            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+           
           <Route
             path="/home"
             element={<Protected isLoggedIn={isLoggedIn}><Home /></Protected>}
