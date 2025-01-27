@@ -2,18 +2,18 @@
 
 
 
-import { createContext} from "react";
+
 import { Link } from "react-router-dom"; // Use Link for navigation
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-export const AuthContext = createContext();
+
 
 
 function Head() {
   return (
-    <AuthContext.Provider value={{ role, isLoggedIn }}>
+   
       <Navbar collapseOnSelect expand="lg" className="bg-dark" fixed="top">
         <Container>
           <Navbar.Brand className="text-white">FoodApoint</Navbar.Brand>
@@ -33,7 +33,7 @@ function Head() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </AuthContext.Provider>
+   
   );
 }
 
