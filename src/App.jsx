@@ -120,7 +120,7 @@ function App() {
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route
             path="/home"
-            element={<Protected isLoggedIn={isLoggedIn}><Home /></Protected>}
+            element={<Home />}
           />
           <Route
             path="/ownerhome"
