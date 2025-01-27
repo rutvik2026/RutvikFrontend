@@ -156,9 +156,9 @@ const RestoRegistrationForm = () => {
           Register
         </Button>
         <br />
-        <Link to={"/"}>Go to Login</Link>
+        <Link to={"/login"}>Go to Login</Link>
         <br />
-        <Link to={"/register"}>Register as Restaurant Owner</Link>
+        <Link to={"/register"}>Register as User </Link>
       </Form>
     </div>
   );
