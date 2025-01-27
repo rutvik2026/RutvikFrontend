@@ -25,7 +25,6 @@ export const PreHome = () => {
 
   return (
     <>
-      {/* Wrap everything in a React Fragment or a parent <div> */}
       <Head />
       <div className="d-flex flex-wrap mt-3 justify-content-center">
         <Container className="mt-3">
