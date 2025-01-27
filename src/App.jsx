@@ -110,7 +110,7 @@ function App() {
                   <Navigate to="/ownerhome" replace />
                 )
               ) : (
-                <Login onLogin={handleLogin} />
+               <Navigate to="/login" replace />
               )
             }
           />
