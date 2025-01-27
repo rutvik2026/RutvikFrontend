@@ -1,12 +1,11 @@
 
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { Home } from "./pages/Home";
 import MyApointment from "./pages/MyApointment";
 import Restorant from "./pages/Restorant";
-import Login from "./pages/Login";
-
-import Login1 from "./pages/Login1.jsx";
+import Login from "./pages/Login.jsx";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RegistrationForm from "./pages/Register";
@@ -129,29 +128,14 @@ function App() {
                   <Navigate to="/ownerhome" replace />
                 )
               ) : (
-               <Login onLogin={handleLogin} />
+               <Navigate to="/login" replace />
               )
             }
           />
 
-          
-              <Route
-              path="/log"
-              element={
-                isLoggedIn ? (
-                  role === "user" ? (
-                    <Navigate to="/home" replace />
-                  ) : (
-                    <Navigate to="/ownerhome" replace />
-                  )
-                ) : (
-                  <Login1 onLogin={handleLogin} />
-                )
-              }
-            />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/restoreg" element={<RestoRegistrationForm />} />
-           
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route
             path="/home"
             element={<Protected isLoggedIn={isLoggedIn}><Home /></Protected>}
