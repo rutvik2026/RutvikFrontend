@@ -22,7 +22,9 @@ function App() {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const [role, setRole] = useState(null);
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
+ useEffect(()=>{
+   handleLogout();
+ },[]);
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
