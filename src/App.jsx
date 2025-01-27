@@ -32,6 +32,7 @@ function App() {
 
     if (isRefresh) {
       // Clear tokens on refresh
+      console.log("Refresh 1");
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
       localStorage.removeItem("customer");
