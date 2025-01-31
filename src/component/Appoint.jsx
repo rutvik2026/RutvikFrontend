@@ -43,6 +43,7 @@ const RestaurantAppointment = () => {
   const [guests, setGuests] = useState(1);
   const [message, setMessage] = useState("");
   const [checkedItem,setCheckedItems]=useState({});
+  const [numberInputs, setNumberInputs] = useState({});
   const [idd,setId]=useState();
 
   const today = new Date().toISOString().split("T")[0];
