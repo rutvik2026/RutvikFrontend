@@ -106,26 +106,59 @@ const RestaurantAppointment = () => {
 
     fetchMenu();
   }, []);
- const handleCheckbox = (index, item) => {
-   setItem((prevItems) => {
-     // Check if the item is already in the array
-     const isAlreadyInArray = prevItems.some((fod) => fod === item.name);
-     console.log("item", isAlreadyInArray);
+const handleCheckbox = (index, item) => {
+     setCheckedItems((prev) => {
+       const isChecked = !prev[index];
 
-     if (isAlreadyInArray) {
-       // If the item is in the array, remove it
-       const rem=parseInt(price)-parseInt(item.price);
-       setPrice(rem);
-       return prevItems.filter((fod) => fod !== item.name);
-     } else {
-       // If the item is not in the array, add it as an object
-        const sum = parseInt(price) + parseInt(item.price);
-        console.log("sum",sum);
-       setPrice(sum);
-       return [...prevItems, item.name];
-     }
-   });
- };
+       if (isChecked) {
+         // Default quantity is 1 when checked
+         setNumberInputs((prevQty) => ({
+           ...prevQty,
+           [index]: 1,
+         }));
+
+         setPrice((prevTotal) => prevTotal + item.price * 1);
+
+         // Store the item with its quantity
+         setItem((prevItems) => [
+           ...prevItems,
+           { name: item.name, quantity: 1 },
+         ]);
+       } else {
+         setPrice(
+           (prevTotal) => prevTotal - (numberInputs[index] || 1) * item.price
+         );
+
+         // Remove item from list
+         setItem((prevItems) =>
+           prevItems.filter((fod) => fod.name !== item.name)
+         );
+       }
+
+       return { ...prev, [index]: isChecked };
+     });
+   };
+
+   const handleNumberChange = (index, value, item) => {
+     let quantity = parseInt(value) || 1;
+     if (quantity < 1) return;
+
+     const oldQuantity = numberInputs[index] || 1;
+     setNumberInputs((prev) => ({ ...prev, [index]: quantity }));
+
+     setPrice(
+       (prevTotal) =>
+         prevTotal - oldQuantity * item.price + quantity * item.price
+     );
+
+     // Update the quantity in selected items
+     setItem((prevItems) =>
+       prevItems.map((fod) =>
+         fod.name === item.name ? { ...fod, quantity: quantity } : fod
+       )
+     );
+   };
+
 
  
 
@@ -223,12 +256,27 @@ const RestaurantAppointment = () => {
                         <strong>Price:</strong> {item.price} Rupees
                       </p>
                     </div>
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      checked={checkedItem[index] || false}
-                      onChange={() => handleCheckbox(index, item)}
-                    ></input>
+                    <div className="d-flex">
+                      <input
+                        type="checkbox"
+                        className="form-check-input"
+                        checked={checkedItem[index] || false}
+                        onChange={() => handleCheckbox(index, item)}
+                      />
+                      {/* Show Quantity Input if Checked */}
+                      {checkedItem[index] && (
+                        <input
+                          type="number"
+                          min="1"
+                          value={numberInputs[index] || 1}
+                          onChange={(e) =>
+                            handleNumberChange(index, e.target.value, item)
+                          }
+                          className="form-control ms-2"
+                          style={{ width: "80px" }}
+                        />
+                      )}
+                    </div>
                   </div>
                 </ListGroup.Item>
               ))}
