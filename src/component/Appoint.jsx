@@ -184,15 +184,14 @@ const handleCheckbox = (index, item) => {
               required
             />
           </label>
-          <label>
-            Food Items:
-            <input
-              type="text"
-              value={Items}
-              onChange={(e) => setItem(e.target.value)}
-              required
-            />
-          </label>
+         <label>Selected Items:</label>
+          <ul>
+            {Items.map((food, index) => (
+              <li key={index}>
+                {food.name} - Quantity: {food.quantity}
+              </li>
+            ))}
+          </ul>
           <label>
             Date:
             <input
