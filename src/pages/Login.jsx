@@ -40,10 +40,10 @@ const Login = ({ onLogin }) => {
         onLogin(fakeToken);
    
         if (cust.role === "user") {
-          alert("Logged in as a user!");
+         
           navigate("/home");
         } else if (cust.role === "owner") {
-          alert("Logged in as an owner!");
+         
           navigate("/ownerhome");
         }
       } else {
