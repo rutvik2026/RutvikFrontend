@@ -132,7 +132,7 @@ const handleCheckbox = (index, item) => {
 
          // Remove item from list
          setItem((prevItems) =>
-           prevItems.filter((fod) => fod.name !== item.name)
+           prevItems.filter((fod) => fod !== item.name)
          );
        }
 
@@ -155,7 +155,7 @@ const handleCheckbox = (index, item) => {
      // Update the quantity in selected items
      setItem((prevItems) =>
        prevItems.map((fod) =>
-         fod.name === item.name ? { ...fod, quantity: quantity } : fod
+         fod === item.name ? { ...fod, quantity: quantity } : fod
        )
      );
    };
