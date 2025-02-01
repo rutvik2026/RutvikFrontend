@@ -215,7 +215,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
              
             </Col>
              <Col xs={12} md={1}>
-              {appointment.status === "accepted" && (
+              {appointment.status === "accepted" && !isPaymentComplete && (
                 <Button
                   variant="success"
                   size="sm"
