@@ -154,7 +154,7 @@ const removeAppointment = async (index) => {
               </Button>
             </Col>
             <Col xs={6} md={1} className="text-center">
-              {appointment.status ="accepted" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
+              {appointment.status ="pending" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
                 Remove
               </Button>)}
             </Col>
