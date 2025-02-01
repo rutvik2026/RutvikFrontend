@@ -223,16 +223,10 @@ const handleCheckbox = (index, item) => {
             />
           </label>
 
-          <label>
-            Price
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              min="1"
-              required
-            />
-          </label>
+         <label>
+          Price: <span>{price} Rupees</span>
+        </label>
+
           <button type="submit">Book Appointment</button>
         </form>
         {message && <p className="message">{message}</p>}
