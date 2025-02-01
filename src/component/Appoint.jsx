@@ -111,34 +111,34 @@ const handleCheckbox = (index, item) => {
      setCheckedItems((prev) => {
        const isChecked = !prev[index];
 
-       if (isChecked) {
-         // Default quantity is 1 when checked
-         setNumberInputs((prevQty) => ({
-           ...prevQty,
-           [index]: 1,
-         }));
+       setNumberInputs((prevQty) => ({
+         ...prevQty,
+         [index]: isChecked ? 1 : undefined, // Remove quantity when unchecked
+       }));
 
-         setPrice((prevTotal) => prevTotal + item.price * 1);
+       setItem((prevItems) => {
+         if (isChecked) {
+           // ✅ Add the new item with default quantity 1
+           return [
+             ...prevItems,
+             { name: item.name, quantity: 1, price: item.price },
+           ];
+         } else {
+           // ✅ Remove only the unchecked item, keeping the rest
+           return prevItems.filter((fod) => fod.name !== item.name);
+         }
+       });
 
-         // Store the item with its quantity
-         setItem((prevItems) => [
-           ...prevItems,
-           { name: item.name, quantity: 1 },
-         ]);
-       } else {
-         setPrice(
-           (prevTotal) => prevTotal - (numberInputs[index] || 1) * item.price
-         );
-
-         // Remove item from list
-         setItem((prevItems) =>
-           prevItems.filter((fod) => fod !== item.name)
-         );
-       }
+       setPrice((prevTotal) => {
+         return isChecked
+           ? prevTotal + item.price
+           : prevTotal - (numberInputs[index] || 1) * item.price;
+       });
 
        return { ...prev, [index]: isChecked };
      });
    };
+
 
    const handleNumberChange = (index, value, item) => {
      let quantity = parseInt(value) || 1;
@@ -155,13 +155,11 @@ const handleCheckbox = (index, item) => {
      // Update the quantity in selected items
      setItem((prevItems) =>
        prevItems.map((fod) =>
-         fod === item.name ? { ...fod, quantity: quantity } : fod
+         fod.name === item.name ? { ...fod, quantity: quantity } : fod
        )
      );
    };
 
-
- 
 
   return (
     <div className="justify-content-center align-items-center d-flex">
