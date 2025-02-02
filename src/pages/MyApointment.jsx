@@ -238,7 +238,7 @@ const handleCompletionChange = (appointmentId, status) => {
                   Pay
                 </Button>
               )}
-                {appointment.status === "accepted" && && !isPaymentComplete && (
+                {appointment.status === "accepted" && isPaymentComplete && (
                 <>
                   <h6>Appointment completed successfully ?</h6>
                   <input
