@@ -131,7 +131,14 @@ const removeAppointment = async (index) => {
               <strong>Time:</strong> {appointment.time || "N/A"}
             </Col>
             <Col xs={12} md={2} className="text-center">
-              <strong>Items:</strong> {appointment.Items || "N/A"}
+             <strong>Items:</strong>
+              <ul>
+                {appointment.Items.map((item, index) => (
+                  <li key={index}>
+                    {item.name}  Quantity: {item.quantity}
+                  </li>
+                ))}
+              </ul>
             </Col>
             <Col xs={12} md={1} className="text-center">
               <strong>Guests:</strong> {appointment.guests || "N/A"}
@@ -154,7 +161,7 @@ const removeAppointment = async (index) => {
               </Button>
             </Col>
             <Col xs={6} md={1} className="text-center">
-              {appointment.status ="pending" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
+              {appointment.status === "pending" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
                 Remove
               </Button>)}
             </Col>
