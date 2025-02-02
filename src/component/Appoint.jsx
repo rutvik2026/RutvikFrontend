@@ -184,6 +184,22 @@ const handleCheckbox = (index, item) => {
               required
             />
           </label>
+            <label>Contact</label>
+          <input
+            type="number"
+            placeholder="Enter Contact No."
+            name="contact"
+            value={formData.contact}
+            onChange={handleChange}
+            maxLength="10"
+            onKeyPress={(e) => {
+              if (!/[0-9]/.test(e.key)) {
+                e.preventDefault(); 
+              }
+            }}
+            required
+          />
+          
          <label>Selected Items:</label>
           <ul>
             {Items.map((food, index) => (
