@@ -54,6 +54,7 @@ fetchData();
             Img={item.RestoPicture}
             title={item.name}
             description={item.address  || "No description available"}
+            description1={item.contact ||"Contact" }
           />
         ))
       ) : (
