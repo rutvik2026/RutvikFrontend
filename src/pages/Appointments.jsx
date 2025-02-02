@@ -7,6 +7,7 @@ import "./Appointment.css";
 export const Appointments = () => {
   const [id, setId] = useState(null);
   const [data, setData] = useState([]);
+  const [completionStatus, setCompletionStatus] = useState("no");
  const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
    const [count,setCount]=useState(false);
@@ -98,7 +99,12 @@ const removeAppointment = async (index) => {
     console.error("Error removing appointment:", error);
   }
 };
-
+const handleCompletionChange = (appointmentId, status) => {
+   setCompletionStatus((prevStatus) => ({
+     ...prevStatus,
+     [appointmentId]: status, // Update status for specific appointment
+   }));
+ };
   return (
     <div className="container mt-4 ">
       <h1 className="mb-4 text-center">All Appointments</h1>
@@ -168,6 +174,32 @@ const removeAppointment = async (index) => {
               {appointment.status === "pending" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
                 Remove
               </Button>)}
+               {appointment.status === "accepted" && (
+                <>
+                  <h6>Appointment completed successfully ?</h6>
+                  <input
+                    type="radio"
+                    name={`appointment-${appointment.uniqueId1}`}
+                    value="yes"
+                    checked={completionStatus[appointment.uniqueId1] === "yes"}
+                    onChange={() =>
+                      handleCompletionChange(appointment.uniqueId1, "yes")
+                    }
+                  ></input>
+                  <input
+                    type="radio"
+                    name={`appointment-${appointment.uniqueId1}`}
+                    value="no"
+                    checked={
+                      completionStatus[appointment.uniqueId1] === "no" ||
+                      !completionStatus[appointment.uniqueId1]
+                    }
+                    onChange={() =>
+                      handleCompletionChange(appointment.uniqueId1, "no")
+                    }
+                  ></input>
+                </>
+              )}
             </Col>
           </Row>
         ))
