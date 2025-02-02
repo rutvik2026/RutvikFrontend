@@ -192,7 +192,14 @@ const handleRazorpayScreen = async (amount, appointment) => {
               <strong>Time:</strong> {appointment.time}
             </Col>
             <Col xs={12} md={1}>
-              <strong>Items:</strong> {appointment.Items}
+             <strong>Items:</strong>
+              <ul>
+                {appointment.Items.map((item, index) => (
+                  <li key={index}>
+                    {item.name}  Quantity: {item.quantity}
+                  </li>
+                ))}
+              </ul>
             </Col>
             <Col xs={12} md={1}>
               <strong>Guests:</strong> {appointment.guests}
