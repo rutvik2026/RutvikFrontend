@@ -186,20 +186,23 @@ const handleCheckbox = (index, item) => {
             />
           </label>
             <label>Contact</label>
-          <input
-            type="number"
-            placeholder="Enter Contact No."
-            name="contact"
-            value={contact}
-           onChange={(e) => setContact(e.target.value)}
-            maxLength="10"
-            onKeyPress={(e) => {
-              if (!/[0-9]/.test(e.key)) {
-                e.preventDefault(); 
-              }
-            }}
-            required
-          />
+         <input
+              type="tel"
+             placeholder="Enter Contact No."
+             name="contact"
+             value={contact}
+             onChange={(e) => {
+            const value = e.target.value;
+    
+            if (/^\d{0,10}$/.test(value)) {
+             setContact(value);
+        }
+     }}
+  maxLength="10"
+  pattern="\d{10}" // Validates exactly 10 digits on form submission
+  required
+/>
+
           
          <label>Selected Items:</label>
           <ul>
