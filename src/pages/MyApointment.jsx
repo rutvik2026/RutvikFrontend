@@ -11,7 +11,7 @@ const MyApointment = () => {
   const [count,setCount]=useState(false);
    const [isPaymentComplete,setIsPaymentComplete]=useState(false);
    const baseUrl = import.meta.env.VITE_API_BASE_URL;
-
+   const [completionStatus, setCompletionStatus] = useState("no");
 
   useEffect(() => {
     console.log("uodated id", appointments);
@@ -157,7 +157,12 @@ const handleRazorpayScreen = async (amount, appointment) => {
   paymentObject.open();
 };
 
-  
+const handleCompletionChange = (appointmentId, status) => {
+   setCompletionStatus((prevStatus) => ({
+     ...prevStatus,
+     [appointmentId]: status, // Update status for specific appointment
+   }));
+ };  
   return (
     <Container className="mt-4">
       <h1 className="text-center mb-4">My Appointments</h1>
@@ -232,6 +237,32 @@ const handleRazorpayScreen = async (amount, appointment) => {
                 >
                   Pay
                 </Button>
+              )}
+                {appointment.status === "accepted" && && !isPaymentComplete && (
+                <>
+                  <h6>Appointment completed successfully ?</h6>
+                  <input
+                    type="radio"
+                    name={`appointment-${appointment.uniqueId1}`}
+                    value="yes"
+                    checked={completionStatus[appointment.uniqueId1] === "yes"}
+                    onChange={() =>
+                      handleCompletionChange(appointment.uniqueId1, "yes")
+                    }
+                  ></input>
+                  <input
+                    type="radio"
+                    name={`appointment-${appointment.uniqueId1}`}
+                    value="no"
+                    checked={
+                      completionStatus[appointment.uniqueId1] === "no" ||
+                      !completionStatus[appointment.uniqueId1]
+                    }
+                    onChange={() =>
+                      handleCompletionChange(appointment.uniqueId1, "no")
+                    }
+                  ></input>
+                </>
               )}
             </Col>
           </Row>
