@@ -185,6 +185,7 @@ const handleCompletionChange = (appointmentId, status) => {
                     onChange={() =>
                       handleCompletionChange(appointment.uniqueId1, "yes")
                     }
+                    disabled={completionStatus[appointment.uniqueId1] === "yes"}
                   ></input>
                   <input
                     type="radio"
@@ -197,6 +198,7 @@ const handleCompletionChange = (appointmentId, status) => {
                     onChange={() =>
                       handleCompletionChange(appointment.uniqueId1, "no")
                     }
+                    disabled={completionStatus[appointment.uniqueId1] === "yes"}
                   ></input>
                 </>
               )}
