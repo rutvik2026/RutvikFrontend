@@ -45,7 +45,7 @@ const RestaurantAppointment = () => {
   const [checkedItem,setCheckedItems]=useState({});
   const [numberInputs, setNumberInputs] = useState({});
   const [idd,setId]=useState();
-
+ const [contact,setContact]=useState();
   const today = new Date().toISOString().split("T")[0];
  
   const handleSubmit = async(e) => {
@@ -70,6 +70,7 @@ const RestaurantAppointment = () => {
         price,
         idd,
         uniqueId1,
+        contact,
       };
       console.log("initial id", ownerId);
        sendBack(customer);
@@ -189,8 +190,8 @@ const handleCheckbox = (index, item) => {
             type="number"
             placeholder="Enter Contact No."
             name="contact"
-            value={formData.contact}
-            onChange={handleChange}
+            value={contact}
+           onChange={(e) => setContact(e.target.value)}
             maxLength="10"
             onKeyPress={(e) => {
               if (!/[0-9]/.test(e.key)) {
