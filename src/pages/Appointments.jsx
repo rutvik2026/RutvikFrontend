@@ -160,7 +160,7 @@ const handleCompletionChange = (appointmentId, status) => {
               <strong>Status:</strong> {appointment.status || "N/A"}
             </Col>
             <Col xs={6} md={1} className="text-center">
-              <Button
+              {appointment.status === "accepted" && ( <Button
                 className="mr-2"
                 variant="success"
                 onClick={() =>
@@ -168,7 +168,7 @@ const handleCompletionChange = (appointmentId, status) => {
                 }
               >
                 Accept
-              </Button>
+              </Button>) }
             </Col>
             <Col xs={6} md={1} className="text-center">
               {appointment.status === "pending" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
