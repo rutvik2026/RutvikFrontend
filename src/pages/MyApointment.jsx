@@ -135,13 +135,27 @@ const handleRazorpayScreen = async (amount, appointment) => {
     amount: amount, // Amount in paise
     currency: "INR",
     name: appointment.initialRestaurantName,
-    handler: function (response) {
+    handler: async function (response) {
       console.log(
         "Payment successful! Razorpay Payment ID:",
         response.razorpay_payment_id
       );
       setResponse_Id(response.razorpay_payment_id); // Update response ID
-      setIsPaymentComplete(true);
+      try {
+          await axios.post("/api/v1/user/update-payment-status", {
+            userId: appointment.idd,
+            ownerId: appointment.ownerId,
+            uniqueId1: appointment.uniqueId1,
+          });
+
+          setIsPaymentComplete((prevStatus) => ({
+            ...prevStatus,
+            [appointment._id]: true, // Update UI state
+          }));
+          alert("Payment successful!");
+        } catch (error) {
+          console.error("Error updating payment status:", error);
+        }
     },
     prefill: {
       name: appointment.initialRestaurantName,
@@ -215,17 +229,18 @@ const handleCompletionChange = (appointmentId, status) => {
             <Col xs={12} md={1}>
               <strong>Status:</strong> {appointment.status}
             </Col>
-            <Col xs={12} md={1}>
-              <Button
-                variant="danger"
-                size="sm"
-                className="m-1"
-                onClick={() => removeAppointment(index)}
-              >
-                Cancel
-              </Button>
-             
-            </Col>
+            {appointment.status === "accepted" && !isPaymentComplete && (
+              <Col xs={12} md={1}>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  className="m-1"
+                  onClick={() => removeAppointment(index)}
+                >
+                  Cancel
+                </Button>
+              </Col>
+            )}
              <Col xs={12} md={1}>
               {appointment.status === "accepted" && !isPaymentComplete && (
                 <Button
