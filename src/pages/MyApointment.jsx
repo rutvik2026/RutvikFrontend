@@ -242,7 +242,7 @@ const handleCompletionChange = (appointmentId, status) => {
               </Col>
             )}
              <Col xs={12} md={1}>
-              {appointment.status === "accepted" && !isPaymentComplete && (
+              {appointment.status === "accepted" && !appointment.isPaymentComplete && (
                 <Button
                   variant="success"
                   size="sm"
@@ -253,7 +253,7 @@ const handleCompletionChange = (appointmentId, status) => {
                   Pay
                 </Button>
               )}
-                {appointment.status === "accepted" && isPaymentComplete && (
+                {appointment.status === "accepted" && appointment.isPaymentComplete && (
                 <>
                   <h6>Appointment completed successfully ?</h6>
                   <input
