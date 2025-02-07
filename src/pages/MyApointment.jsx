@@ -147,7 +147,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
             ownerId: appointment.ownerId,
             uniqueId1: appointment.uniqueId1,
           });
-
+          setCount(!count);
           setIsPaymentComplete((prevStatus) => ({
             ...prevStatus,
             [appointment._id]: true, // Update UI state
@@ -248,7 +248,7 @@ const handleCompletionChange = (appointmentId, status) => {
                   size="sm"
                   className="m-1"
                   onClick={() =>handlePayment(index)}
-                  disabled={isPaymentComplete}
+                  disabled={setCount(!count);.isPaymentComplete}
                 >
                   Pay
                 </Button>
