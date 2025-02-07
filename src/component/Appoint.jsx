@@ -15,6 +15,7 @@ const RestaurantAppointment = () => {
      const ownerId=location.state?.id || "";
       const [menu, setMenu] = useState([]);
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const [isPaymentComplete,setIsPaymentComplete]=useState(false)
    const sendBack = async (customer) => {
      try {
        console.log("iniial id in sendBack", customer);
@@ -71,6 +72,7 @@ const RestaurantAppointment = () => {
         idd,
         uniqueId1,
         contact,
+        isPaymentComplete,
       };
       console.log("initial id", ownerId);
        sendBack(customer);
