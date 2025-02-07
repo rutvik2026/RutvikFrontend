@@ -142,7 +142,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
       );
       
       try {
-          await axios.post("/api/v1/user/update-payment-status", {
+          await axios.post(`${baseUrl}/v1/user/update-payment-status`, {
             userId: appointment.idd,
             ownerId: appointment.ownerId,
             uniqueId1: appointment.uniqueId1,
