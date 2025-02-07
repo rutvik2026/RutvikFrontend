@@ -140,7 +140,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
         "Payment successful! Razorpay Payment ID:",
         response.razorpay_payment_id
       );
-      setResponse_Id(response.razorpay_payment_id); // Update response ID
+      
       try {
           await axios.post("/api/v1/user/update-payment-status", {
             userId: appointment.idd,
