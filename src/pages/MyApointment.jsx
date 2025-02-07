@@ -249,7 +249,7 @@ const handleCompletionChange = (appointmentId, status) => {
                   size="sm"
                   className="m-1"
                   onClick={() =>handlePayment(index)}
-                  disabled={setCount(!count);.isPaymentComplete}
+                 
                 >
                   Pay
                 </Button>
