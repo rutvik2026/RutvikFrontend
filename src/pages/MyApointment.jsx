@@ -254,7 +254,8 @@ const handleCompletionChange = (appointmentId, status) => {
                   Pay
                 </Button>
               )}
-                {appointment.status === "accepted" && appointment.isPaymentComplete && (
+                
+               {appointment.status === "accepted" && appointment.isPaymentComplete && (
   <>
     <h6>Appointment completed successfully?</h6>
     <Form>
@@ -276,11 +277,11 @@ const handleCompletionChange = (appointmentId, status) => {
           !completionStatus[appointment.uniqueId1] // Default to "no"
         }
         onChange={() => handleCompletionChange(appointment.uniqueId1, "no")}
+        disabled={completionStatus[appointment.uniqueId1] === "yes"} // Disable if "Yes" is selected
       />
     </Form>
   </>
 )}
-
             </Col>
           </Row>
         ))
