@@ -256,6 +256,7 @@ const handleCompletionChange = (appointmentId, status) => {
                 {appointment.status === "accepted" && appointment.isPaymentComplete && (
                 <>
                   <h6>Appointment completed successfully ?</h6>
+                 <label>
                   <input
                     type="radio"
                     name={`appointment-${appointment.uniqueId1}`}
@@ -265,6 +266,9 @@ const handleCompletionChange = (appointmentId, status) => {
                       handleCompletionChange(appointment.uniqueId1, "yes")
                     }
                   ></input>
+                   Yes
+                 </label>
+                <label>
                   <input
                     type="radio"
                     name={`appointment-${appointment.uniqueId1}`}
@@ -277,6 +281,8 @@ const handleCompletionChange = (appointmentId, status) => {
                       handleCompletionChange(appointment.uniqueId1, "no")
                     }
                   ></input>
+                  N0
+                </label>
                 </>
               )}
             </Col>
