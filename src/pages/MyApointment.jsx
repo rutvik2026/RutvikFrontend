@@ -256,33 +256,28 @@ const handleCompletionChange = (appointmentId, status) => {
                 {appointment.status === "accepted" && appointment.isPaymentComplete && (
                 <>
                   <h6>Appointment completed successfully ?</h6>
-                 <label>
+                <label>
                   <input
                     type="radio"
                     name={`appointment-${appointment.uniqueId1}`}
                     value="yes"
                     checked={completionStatus[appointment.uniqueId1] === "yes"}
-                    onChange={() =>
-                      handleCompletionChange(appointment.uniqueId1, "yes")
-                    }
-                  ></input>
-                   Yes
-                 </label>
-                <label>
-                  <input
-                    type="radio"
-                    name={`appointment-${appointment.uniqueId1}`}
-                    value="no"
-                    checked={
-                      completionStatus[appointment.uniqueId1] === "no" ||
-                      !completionStatus[appointment.uniqueId1]
-                    }
-                    onChange={() =>
-                      handleCompletionChange(appointment.uniqueId1, "no")
-                    }
-                  ></input>
-                  N0
-                </label>
+                    onChange={() => handleCompletionChange(appointment.uniqueId1, "yes")}
+                  />
+                    Yes
+              </label>
+
+            <label>
+            <input
+                type="radio"
+                name={`appointment-${appointment.uniqueId1}`}
+                value="no"
+              checked={completionStatus[appointment.uniqueId1] === "no"}
+                onChange={() => handleCompletionChange(appointment.uniqueId1, "no")}
+              />
+              No
+             </label>
+
                 </>
               )}
             </Col>
