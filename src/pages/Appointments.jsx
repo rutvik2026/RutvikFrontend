@@ -174,34 +174,33 @@ const handleCompletionChange = (appointmentId, status) => {
               {appointment.status === "pending" && (<Button variant="danger" onClick={() => removeAppointment(index)}>
                 Remove
               </Button>)}
-               {appointment.status === "accepted" && (
-                <>
-                  <h6>Appointment completed successfully ?</h6>
-                  <input
-                    type="radio"
-                    name={`appointment-${appointment.uniqueId1}`}
-                    value="yes"
-                    checked={completionStatus[appointment.uniqueId1] === "yes"}
-                    onChange={() =>
-                      handleCompletionChange(appointment.uniqueId1, "yes")
-                    }
-                    disabled={completionStatus[appointment.uniqueId1] === "yes"}
-                  ></input>
-                  <input
-                    type="radio"
-                    name={`appointment-${appointment.uniqueId1}`}
-                    value="no"
-                    checked={
-                      completionStatus[appointment.uniqueId1] === "no" ||
-                      !completionStatus[appointment.uniqueId1]
-                    }
-                    onChange={() =>
-                      handleCompletionChange(appointment.uniqueId1, "no")
-                    }
-                    disabled={completionStatus[appointment.uniqueId1] === "yes"}
-                  ></input>
-                </>
-              )}
+              {appointment.status === "accepted" && appointment.isPaymentComplete && (
+                      <>
+                            <h6>Appointment completed successfully?</h6>
+                                <Form>
+                                  <Form.Check
+                                      type="radio"
+                                      label="Yes"
+                                       name={`appointment-${appointment.uniqueId1}`}
+                                        value="yes"
+                                       checked={completionStatus[appointment.uniqueId1] === "yes"}
+                                        onChange={() => handleCompletionChange(appointment.uniqueId1, "yes")}
+                                        />
+                                <Form.Check
+                                type="radio"
+                                label="No"
+                                name={`appointment-${appointment.uniqueId1}`}
+                                value="no"
+                                checked={
+                                completionStatus[appointment.uniqueId1] === "no" ||
+                                !completionStatus[appointment.uniqueId1] // Default to "no"
+                                }
+                            onChange={() => handleCompletionChange(appointment.uniqueId1, "no")}
+                            disabled={completionStatus[appointment.uniqueId1] === "yes"} // Disable if "Yes" is selected
+                          />
+                      </Form>
+                    </>
+                )}
             </Col>
           </Row>
         ))
