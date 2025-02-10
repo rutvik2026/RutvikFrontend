@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Feedback from "react-bootstrap/esm/Feedback";
+ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 import { useLocation } from "react-router-dom";
 const Feed = () => {
   const location=useLocation();
@@ -12,7 +13,7 @@ const Feed = () => {
   const [fed,setfed]=useState();
   const feedd=async ()=>{
    try {
-    const res = await axios.post("/api/v1/user/feed", { name: name,username:username,feedback:fed,ownerId:ownerId });
+    const res = await axios.post(`${baseUrl}/v1/user/feed`, { name: name,username:username,feedback:fed,ownerId:ownerId });
     console.log(res.data);
    } catch (error) {
     console.log("error in feedback",error)
