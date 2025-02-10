@@ -15,7 +15,8 @@ const RestaurantAppointment = () => {
      const ownerId=location.state?.id || "";
       const [menu, setMenu] = useState([]);
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
-      const [isPaymentComplete,setIsPaymentComplete]=useState(false)
+      const [isPaymentComplete,setIsPaymentComplete]=useState(false);
+     const [feedback,setFeedback]=useState({});
    const sendBack = async (customer) => {
      try {
        console.log("iniial id in sendBack", customer);
@@ -163,144 +164,178 @@ const handleCheckbox = (index, item) => {
      );
    };
 
-
+ useEffect(()=>{
+  const fetchFeedback=async ()=>{
+    try {
+      const response = await axios.get(`${baseUrl}/v1/user/getfeedback`, {
+        params: { ownerId: ownerId },
+      });
+      console.log("feedback1",response.data.feedback);
+       setFeedback(response.data.feedback);
+       
+    } catch (error) {
+      console.log("error in fetching fedback",error);
+    }
+  }
+  fetchFeedback();
+ },[ownerId]);
   return (
-    <div className="justify-content-center align-items-center d-flex">
-      <div className="form-container justify-content-center align-items-center">
-        <h2>Book a Appoint</h2>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Restaurant Name:
-            <input
-              type="text"
-              value={restaurantName || initialRestaurantName}
-              onChange={(e) => setRestaurantName(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Your Name:
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </label>
-            <label>Contact</label>
-         <input
-              type="tel"
-             placeholder="Enter Contact No."
-             name="contact"
-             value={contact}
-             onChange={(e) => {
-            const value = e.target.value;
-    
-            if (/^\d{0,10}$/.test(value)) {
-             setContact(value);
-        }
-     }}
-  maxLength="10"
-  pattern="\d{10}" // Validates exactly 10 digits on form submission
-  required
-/>
-
-          
-         <label>Selected Items:</label>
-          <ul>
-            {Items.map((food, index) => (
-              <li key={index}>
-                {food.name} - Quantity: {food.quantity}
-              </li>
-            ))}
-          </ul>
-          <label>
-            Date:
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              min={today}
-              required
-            />
-          </label>
-          <label>
-            Time:
-            <input
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              required
-            />
-          </label>
-          <label>
-            Number of Guests:
-            <input
-              type="number"
-              value={guests}
-              onChange={(e) => setGuests(e.target.value)}
-              min="1"
-              max="10"
-              required
-            />
-          </label>
-
-         <label>
-          Price: <span>{price} Rupees</span>
-        </label>
-
-          <button type="submit">Book Appointment</button>
-        </form>
-        {message && <p className="message">{message}</p>}
-      </div>
-      <Row className="mt-4">
-        <Col>
-          <h3>Menu</h3>
-          {menu.length > 0 ? (
-            <ListGroup>
-              {menu.map((item, index) => (
-                <ListGroup.Item key={index}>
-                  <div className="d-flex align-items-center justify-content-center">
-                    <div>
-                      <h5>
-                        {index + 1} ) {item.name}
-                      </h5>
-                      <p>{item.description}</p>
-                      <p>
-                        <strong>Price:</strong> {item.price} Rupees
-                      </p>
-                    </div>
-                    <div className="d-flex">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        checked={checkedItem[index] || false}
-                        onChange={() => handleCheckbox(index, item)}
-                      />
-                      {/* Show Quantity Input if Checked */}
-                      {checkedItem[index] && (
-                        <input
-                          type="number"
-                          min="1"
-                          value={numberInputs[index] || 1}
-                          onChange={(e) =>
-                            handleNumberChange(index, e.target.value, item)
-                          }
-                          className="form-control ms-2"
-                          style={{ width: "80px" }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                </ListGroup.Item>
+     <>
+      <div className="justify-content-center align-items-center d-flex">
+        <div className="form-container justify-content-center align-items-center">
+          <h2>Book a Appoint</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Restaurant Name:
+              <input
+                type="text"
+                value={restaurantName || initialRestaurantName}
+                onChange={(e) => setRestaurantName(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Your Name:
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <label>Contact</label>
+              <input
+                type="tel"
+                placeholder="Enter Contact No."
+                name="contact"
+                value={contact}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only numbers and limit to 10 digits
+                  if (/^\d{0,10}$/.test(value)) {
+                    setContact(value);
+                  }
+                }}
+                maxLength="10"
+                pattern="\d{10}" // Validates exactly 10 digits on form submission
+                required
+              />
+            </label>
+            <label>Selected Items:</label>
+            <ul>
+              {Items.map((food, index) => (
+                <li key={index}>
+                  {food.name} - Quantity: {food.quantity}
+                </li>
               ))}
-            </ListGroup>
-          ) : (
-            <p>No menu items added yet.</p>
-          )}
-        </Col>
-      </Row>
-    </div>
+            </ul>
+
+            <label>
+              Date:
+              <input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                min={today}
+                required
+              />
+            </label>
+            <label>
+              Time:
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              Number of Guests:
+              <input
+                type="number"
+                value={guests}
+                onChange={(e) => setGuests(e.target.value)}
+                min="1"
+                max="10"
+                required
+              />
+            </label>
+
+            <label>
+              Price
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                min="1"
+                required
+              />
+            </label>
+            <button type="submit">Book Appointment</button>
+          </form>
+          {message && <p className="message">{message}</p>}
+        </div>
+        <Row className="mt-4">
+          <Col>
+            <h3>Menu</h3>
+            {menu.length > 0 ? (
+              <ListGroup>
+                {menu.map((item, index) => (
+                  <ListGroup.Item key={index}>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <div>
+                        <h5>
+                          {index + 1} ) {item.name}
+                        </h5>
+                        <p>{item.description}</p>
+                        <p>
+                          <strong>Price:</strong> {item.price} Rupees
+                        </p>
+                      </div>
+                      <div className="d-flex">
+                        <input
+                          type="checkbox"
+                          className="form-check-input"
+                          checked={checkedItem[index] || false}
+                          onChange={() => handleCheckbox(index, item)}
+                        />
+                        {/* Show Quantity Input if Checked */}
+                        {checkedItem[index] && (
+                          <input
+                            type="number"
+                            value={numberInputs[index] || 1} // Default to 1
+                            onChange={(e) =>
+                              handleNumberChange(index, e.target.value, item)
+                            }
+                            min="1"
+                            className="form-control mt-2"
+                            inputMode="numeric"
+                            pattern="[1-9][0-9]*"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </ListGroup.Item>
+                ))}
+              </ListGroup>
+            ) : (
+              <p>No menu items added yet.</p>
+            )}
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <h3>Feedback</h3>
+        {feedback && typeof feedback === "object" ? (
+          <div >
+            <h4>Name: {feedback.name || "No Name"}</h4>
+            <p>Username: {feedback.username || "No Username"}</p>
+            <p>Feedback: {feedback.feedback || "No Feedback"}</p>
+          </div>
+        ) : (
+          <p>No feedback available.</p>
+        )}
+      </div>
+    </>
   );
 };
 
