@@ -334,7 +334,7 @@ const handleCheckbox = (index, item) => {
         <h3>Feedback</h3>
         {feedback.length > 0 ? (
           feedback.map((fb, index) => (
-            <div key={index}>
+            <div key={index}  className="mt-2 p-3 border border-dark bg-light rounded shadow-sm">
               <h4>Name: {fb.name || "No Name"}</h4>
               <p>Username: {fb.username || "No Username"}</p>
               <p>Feedback: {fb.feedback || "No Feedback"}</p>
