@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Row, Col, Container, Button } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useAppointments } from "../component/AppointmentContext";
 import "./MyAppointments.css";
@@ -13,7 +13,7 @@ const MyApointment = () => {
    const [isPaymentComplete,setIsPaymentComplete]=useState(false);
    const baseUrl = import.meta.env.VITE_API_BASE_URL;
    const [completionStatus, setCompletionStatus] = useState("no");
-
+  const navigate = useNavigate();
   useEffect(() => {
     console.log("uodated id", appointments);
   }, [appointments]);
