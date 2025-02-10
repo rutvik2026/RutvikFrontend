@@ -3,9 +3,10 @@ import axios from "axios";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Feedback from "react-bootstrap/esm/Feedback";
- const baseUrl = import.meta.env.VITE_API_BASE_URL;
+ 
 import { useLocation } from "react-router-dom";
 const Feed = () => {
+ const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const location=useLocation();
   const name=location.state?.title;
   const ownerId=location.state?.id;
