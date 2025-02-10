@@ -19,7 +19,7 @@ import MyRestorant from "./pages/MyRestorant";
 import { Appointments } from "./pages/Appointments";
 import { AppointmentProvider } from "./component/AppointmentContext";
 import OwnerHome from "./pages/OwnerHome";
-
+import Feed from "./pages/Feed";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAuthChecked, setIsAuthChecked] = useState(false);
@@ -176,6 +176,14 @@ function App() {
             path="/myapointment"
             element={<Protected isLoggedIn={isLoggedIn}><MyApointment /></Protected>}
           />
+           <Route
+              path="/feedback"
+              element={
+                <Protected isLoggedIn={isLoggedIn}>
+                  <Feed></Feed>
+                </Protected>
+              }
+            />
           <Route
             path="/restorantAppointment"
             element={<Protected isLoggedIn={isLoggedIn}><Appointments /></Protected>}
