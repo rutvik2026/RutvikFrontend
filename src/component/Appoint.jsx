@@ -167,7 +167,7 @@ const handleCheckbox = (index, item) => {
  useEffect(() => {
     const fetchFeedback = async () => {
       try {
-        const response = await axios.get("/api/v1/user/getfeedback", {
+        const response = await axios.get(`${baseUrl}/v1/user/getfeedback`, {
           params: { ownerId: ownerId },
         });
 
