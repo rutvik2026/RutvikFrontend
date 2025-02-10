@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./RestaurantAppointment.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-import { Form } from "react-bootstrap";
+
 import {
   Col,
  Row,
@@ -268,16 +268,10 @@ const handleCheckbox = (index, item) => {
               />
             </label>
 
-            <Form.Group controlId="price">
-  <Form.Label className="fw-bold">Price</Form.Label>
-  <Form.Control
-    type="number"
-    value={price}
-    onChange={(e) => setPrice(e.target.value)}
-    min="1"
-    required
-  />
-</Form.Group>
+             <label>
+          Price: <span>{price} Rupees</span>
+        </label>
+
             <button type="submit">Book Appointment</button>
           </form>
           {message && <p className="message">{message}</p>}
