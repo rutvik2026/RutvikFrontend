@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Row, Col, Container, Button } from "react-bootstrap";
-import { Form } from "react-bootstrap";
+
 import React from "react";
 import { useAppointments } from "../component/AppointmentContext";
 import "./MyAppointments.css";
@@ -178,6 +178,18 @@ const handleCompletionChange = (appointmentId, status) => {
      [appointmentId]: status, // Update status for specific appointment
    }));
  };  
+
+  const feedback = (index)=>{
+  console.log("feedback clicked");
+  const appointment = data[index];
+  navigate("/feedback", {
+    state: {
+      title: appointment.initialRestaurantName,
+      id: appointment.ownerId,
+      name:appointment.name,
+    },
+  });
+} 
   return (
     <Container className="mt-4">
       <h1 className="text-center mb-4">My Appointments</h1>
