@@ -255,32 +255,19 @@ const handleCompletionChange = (appointmentId, status) => {
                 </Button>
               )}
                 
-               {appointment.status === "accepted" && appointment.isPaymentComplete && (
-                      <>
-                            <h6>Appointment completed successfully?</h6>
-                                <Form>
-                                  <Form.Check
-                                      type="radio"
-                                      label="Yes"
-                                       name={`appointment-${appointment.uniqueId1}`}
-                                        value="yes"
-                                       checked={completionStatus[appointment.uniqueId1] === "yes"}
-                                        onChange={() => handleCompletionChange(appointment.uniqueId1, "yes")}
-                                        />
-                                <Form.Check
-                                type="radio"
-                                label="No"
-                                name={`appointment-${appointment.uniqueId1}`}
-                                value="no"
-                                checked={
-                                completionStatus[appointment.uniqueId1] === "no" ||
-                                !completionStatus[appointment.uniqueId1] // Default to "no"
-                                }
-                            onChange={() => handleCompletionChange(appointment.uniqueId1, "no")}
-                            disabled={completionStatus[appointment.uniqueId1] === "yes"} // Disable if "Yes" is selected
-                          />
-                      </Form>
-                    </>
+               {appointment.status === "accepted" &&
+                appointment.isPaymentComplete && (
+                  <>
+                    <h6>Appointment completed successfully?</h6>
+                    <Button
+                      variant="success"
+                      size="sm"
+                      className="m-1"
+                      onClick={() => feedback(index)}
+                    >
+                      FeedBack
+                    </Button>
+                  </>
                 )}
             </Col>
           </Row>
