@@ -16,7 +16,7 @@ const RestaurantAppointment = () => {
       const [menu, setMenu] = useState([]);
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
       const [isPaymentComplete,setIsPaymentComplete]=useState(false);
-     const [feedback,setFeedback]=useState({});
+     const [feedback,setFeedback]=useState([]);
    const sendBack = async (customer) => {
      try {
        console.log("iniial id in sendBack", customer);
@@ -164,21 +164,28 @@ const handleCheckbox = (index, item) => {
      );
    };
 
- useEffect(()=>{
-  const fetchFeedback=async ()=>{
-    try {
-      const response = await axios.get(`${baseUrl}/v1/user/getfeedback`, {
-        params: { ownerId: ownerId },
-      });
-      console.log("feedback1",response.data.feedback);
-       setFeedback(response.data.feedback);
-       
-    } catch (error) {
-      console.log("error in fetching fedback",error);
-    }
-  }
-  fetchFeedback();
- },[ownerId]);
+ useEffect(() => {
+    const fetchFeedback = async () => {
+      try {
+        const response = await axios.get("/api/v1/user/getfeedback", {
+          params: { ownerId: ownerId },
+        });
+
+        console.log("Fetched Feedback Data:", response.data);
+
+        // ✅ Ensure feedback is an array before setting state
+        if (Array.isArray(response.data)) {
+          setFeedback(response.data);
+        } else {
+          setFeedback([]); // Handle unexpected response
+        }
+      } catch (error) {
+        console.log("Error fetching feedback:", error);
+      }
+    };
+
+    fetchFeedback();
+  }, [ownerId]);
   return (
      <>
       <div className="justify-content-center align-items-center d-flex">
@@ -325,12 +332,14 @@ const handleCheckbox = (index, item) => {
       </div>
       <div>
         <h3>Feedback</h3>
-        {feedback && typeof feedback === "object" ? (
-          <div >
-            <h4>Name: {feedback.name || "No Name"}</h4>
-            <p>Username: {feedback.username || "No Username"}</p>
-            <p>Feedback: {feedback.feedback || "No Feedback"}</p>
-          </div>
+        {feedback.length > 0 ? (
+          feedback.map((fb, index) => (
+            <div key={index}>
+              <h4>Name: {fb.name || "No Name"}</h4>
+              <p>Username: {fb.username || "No Username"}</p>
+              <p>Feedback: {fb.feedback || "No Feedback"}</p>
+            </div>
+          ))
         ) : (
           <p>No feedback available.</p>
         )}
