@@ -194,6 +194,7 @@ const handleCompletionChange = (appointmentId, status) => {
     <Container className="mt-4">
       <h1 className="text-center mb-4">My Appointments</h1>
       <Row className="font-weight-bold text-center d-none d-md-flex">
+        <Col>ID</Col>
         <Col>Restaurant Name</Col>
         <Col>Name</Col>
         <Col>Date</Col>
@@ -211,6 +212,9 @@ const handleCompletionChange = (appointmentId, status) => {
             key={appointment._id}
             className="align-items-center text-center mb-3 appointment-row"
           >
+             <Col xs={12} md={1}>
+              <strong>ID:</strong> {appointment.otp}
+            </Col>
             <Col xs={12} md={1}>
               <strong>Restaurant:</strong> {appointment.initialRestaurantName}
             </Col>
