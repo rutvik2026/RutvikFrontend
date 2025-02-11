@@ -60,7 +60,12 @@ const RestaurantAppointment = () => {
          const randomNum = Math.floor(Math.random() * 100000);
          return `${timestamp}-${randomNum}`;
        }
-
+      function generateOtp(){
+        const timestamp=Date.now();
+        const otp=timestamp.toString().slice(-4);
+        return otp;
+       }
+       const otp = generateOtp();
        const uniqueId1 = generateUniqueId();
       const customer = {
         initialRestaurantName,
@@ -75,6 +80,7 @@ const RestaurantAppointment = () => {
         uniqueId1,
         contact,
         isPaymentComplete,
+        otp,
       };
       console.log("initial id", ownerId);
        sendBack(customer);
