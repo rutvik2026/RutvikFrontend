@@ -111,6 +111,7 @@ const handleCompletionChange = (appointmentId, status) => {
       <h1 className="mb-4 text-center">All Appointments</h1>
       <Row className="font-weight-bold text-center d-none d-md-flex">
         {/* Column headers */}
+        <Col>ID</Col>
         <Col>Name</Col>
         <Col>Phone</Col>
         <Col>Date</Col>
@@ -130,6 +131,9 @@ const handleCompletionChange = (appointmentId, status) => {
             className="align-items-center mb-3 appointment-row"
           >
             <Col xs={12} md={1} className="text-center">
+              <strong>ID:</strong> {appointment.otp || "N/A"}
+            </Col>
+            <Col xs={12} md={1} className="text-center">
               <strong>Name:</strong> {appointment.name || "N/A"}
             </Col>
             <Col xs={12} md={1} className="text-center">
@@ -141,7 +145,7 @@ const handleCompletionChange = (appointmentId, status) => {
             <Col xs={12} md={2} className="text-center">
               <strong>Time:</strong> {appointment.time || "N/A"}
             </Col>
-            <Col xs={12} md={2} className="text-center">
+            <Col xs={12} md={1} className="text-center">
              <strong>Items:</strong>
               <ul>
                 {appointment.Items.map((item, index) => (
