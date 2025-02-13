@@ -70,7 +70,7 @@ const MyApointment = () => {
  const whatsapp = async (appointment) => {
     const message = `Payment is Complete by user you have to Provide Appointment to user on time`;
     const subject = "Regarding Food Appointment on FoodApoint";
-    const result = await axios.post("/api/v1/user/sendmassage", {
+    const result = await axios.post(`${baseUrl}/v1/user/sendmassage`, {
       to: appointment.email,
       subject: subject,
       text: message,
