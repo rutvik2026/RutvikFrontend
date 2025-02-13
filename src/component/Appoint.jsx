@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./RestaurantAppointment.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
- const ownerEmail = location.state?.ownerEmail || "";
+ 
 import {
   Col,
  Row,
@@ -14,6 +14,7 @@ const RestaurantAppointment = () => {
      const location = useLocation();
      const initialRestaurantName = location.state?.title || "";
      const ownerId=location.state?.id || "";
+     const ownerEmail = location.state?.ownerEmail || "";
       const [menu, setMenu] = useState([]);
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
       const [isPaymentComplete,setIsPaymentComplete]=useState(false);
