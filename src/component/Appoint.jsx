@@ -49,16 +49,20 @@ const RestaurantAppointment = () => {
   Owner Email: ${customer.ownerEmail}
   Payment Completed: ${customer.isPaymentComplete ? "Yes" : "No"}
   Price: ${customer.price}
-  Unique ID: ${customer.uniqueId1}
+  
 `;
      const message = `NEW appointment is Booked by user Accept or Reject Appointment ${customerData}`;
      const subject = "Regarding Food Appointment on FoodApoint";
-     const result = await axios.post(`${baseUrl}/v1/user/sendmassage`, {
-       to: ownerEmail,
-       subject: subject,
-       text: message,
-     });
-     console.log(result.data);
+     try {
+       const result = await axios.post("/api/v1/user/sendmassage", {
+         to: ownerEmail,
+         subject: subject,
+         text: message,
+       });
+       console.log(result.data);
+    } catch (error) {
+      console.log("error in sending mail",error);
+    }
    };
   const [restaurantName, setRestaurantName] = useState("");
   const [name, setName] = useState("");
