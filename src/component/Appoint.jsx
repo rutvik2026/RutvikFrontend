@@ -121,9 +121,11 @@ const RestaurantAppointment = () => {
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
-      const { id } = JSON.parse(customerData);
+      const { id,email } = JSON.parse(customerData);
       setId(id);
+     setEmail(email);
       console.log("user ID:", id);
+     console.log("user Email",email);
     }
   }, []);
 
