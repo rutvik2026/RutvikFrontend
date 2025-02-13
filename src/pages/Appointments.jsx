@@ -64,7 +64,7 @@ const whatsapp=async(index)=>{
       const appointment=data[index];
       const message = `Your appointment is accepted by ${appointment.initialRestaurantName} Pay 25% and Confirm Appointment`; 
       const subject = "Regarding Food Appointment on FoodApoint"
-      const result = await axios.post("/api/v1/user/sendmassage", {
+      const result = await axios.post(`${baseUrl}/v1/user/sendmassage`, {
         to: appointment.email,
         subject:subject,
         text: message,
