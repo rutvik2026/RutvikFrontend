@@ -67,7 +67,16 @@ const MyApointment = () => {
       console.error("Error removing appointment:", error);
     }
   };
-
+ const whatsapp = async (appointment) => {
+    const message = `Payment is Complete by user you have to Provide Appointment to user on time`;
+    const subject = "Regarding Food Appointment on FoodApoint";
+    const result = await axios.post("/api/v1/user/sendmassage", {
+      to: appointment.email,
+      subject: subject,
+      text: message,
+    });
+    console.log(result.data);
+  };
 const handlePayment = async (index) => {
   const appointment = data[index];
   console.log("Data for appointment:", appointment.price);
@@ -153,6 +162,7 @@ const handleRazorpayScreen = async (amount, appointment) => {
             ...prevStatus,
             [appointment._id]: true, // Update UI state
           }));
+          whatsapp(appointment);
           alert("Payment successful!");
         } catch (error) {
           console.error("Error updating payment status:", error);
