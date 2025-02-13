@@ -53,6 +53,7 @@ fetchData();
             id={item._id}
             Img={item.RestoPicture}
             title={item.name}
+            email={item.email ||"No Email"}
             description={item.address  || "No description available"}
             description1={item.contact ||"Contact" }
           />
