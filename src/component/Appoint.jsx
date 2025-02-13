@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./RestaurantAppointment.css";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
-
+ const ownerEmail = location.state?.ownerEmail || "";
 import {
   Col,
  Row,
@@ -36,7 +36,29 @@ const RestaurantAppointment = () => {
        console.log("Error during id send appoint to server ", customer, error);
      }
    };
-  
+  const whatsapp = async (customer) => {
+     const customerData = `
+  Name: ${customer.name}
+  Restaurant: ${customer.initialRestaurantName}
+  Date: ${customer.date}
+  Time: ${customer.time}
+  Guests: ${customer.guests}
+  Contact: ${customer.contact}
+  Email: ${customer.email}
+  Owner Email: ${customer.ownerEmail}
+  Payment Completed: ${customer.isPaymentComplete ? "Yes" : "No"}
+  Price: ${customer.price}
+  Unique ID: ${customer.uniqueId1}
+`;
+     const message = `NEW appointment is Booked by user Accept or Reject Appointment ${customerData}`;
+     const subject = "Regarding Food Appointment on FoodApoint";
+     const result = await axios.post("/api/v1/user/sendmassage", {
+       to: ownerEmail,
+       subject: subject,
+       text: message,
+     });
+     console.log(result.data);
+   };
   const [restaurantName, setRestaurantName] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -49,6 +71,7 @@ const RestaurantAppointment = () => {
   const [numberInputs, setNumberInputs] = useState({});
   const [idd,setId]=useState();
  const [contact,setContact]=useState();
+  const [email,setEmail]=useState();
   const today = new Date().toISOString().split("T")[0];
  
   const handleSubmit = async(e) => {
@@ -81,9 +104,12 @@ const RestaurantAppointment = () => {
         contact,
         isPaymentComplete,
         otp,
+         email,
+        ownerEmail,
       };
       console.log("initial id", ownerId);
        sendBack(customer);
+      whatsapp(customer);
       setMessage("Appointment booked successfully!");
       alert("Appointment booked successfully!");
      
