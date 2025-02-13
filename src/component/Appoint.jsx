@@ -52,7 +52,7 @@ const RestaurantAppointment = () => {
 `;
      const message = `NEW appointment is Booked by user Accept or Reject Appointment ${customerData}`;
      const subject = "Regarding Food Appointment on FoodApoint";
-     const result = await axios.post("/api/v1/user/sendmassage", {
+     const result = await axios.post(`${baseUrl}/v1/user/sendmassage`, {
        to: ownerEmail,
        subject: subject,
        text: message,
