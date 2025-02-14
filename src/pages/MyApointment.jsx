@@ -256,7 +256,8 @@ const handleCompletionChange = (appointmentId, status) => {
             <Col xs={12} md={1}>
               <strong>Status:</strong> {appointment.status}
             </Col>
-            { !appointment.isPaymentComplete && (
+            { !appointment.isPaymentComplete &&appointment.status ===
+                "pending"&& (
               <Col xs={12} md={1}>
                 <Button
                   variant="danger"
