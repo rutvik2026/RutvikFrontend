@@ -38,17 +38,22 @@ const RestaurantAppointment = () => {
      }
    };
   const whatsapp = async (customer) => {
+    const itemList = customer?.Items?.map(
+       (item, index) => `${item.name} - Quantity: ${item.quantity}`
+     ).join(" ");
      const customerData = `
   Name: ${customer.name}
   Restaurant: ${customer.initialRestaurantName}
+  Appointment id: ${customer.otp}
+  FoodItems :${itemList}
+   Price: ${customer.price}
   Date: ${customer.date}
   Time: ${customer.time}
   Guests: ${customer.guests}
-  Contact: ${customer.contact}
-  Email: ${customer.email}
-  Owner Email: ${customer.ownerEmail}
+  User Contact: ${customer.contact}
+  User Email: ${customer.email}
   Payment Completed: ${customer.isPaymentComplete ? "Yes" : "No"}
-  Price: ${customer.price}
+ 
   
 `;
      const message = `NEW appointment is Booked by user Accept or Reject Appointment ${customerData}`;
