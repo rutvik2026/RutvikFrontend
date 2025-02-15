@@ -5,7 +5,11 @@ import Card from "react-bootstrap/Card";
 
 function Cardsone(props) {
   
+ const navigate = useNavigate();
 
+  const bookAppoint = () => {
+    navigate("/apointment", { state: { title: props.title, id: props.id ,ownerEmail:props.email} });
+  };
  
 
   return (
