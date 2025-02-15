@@ -15,6 +15,9 @@ function Cardsone(props) {
         <Card.Title>{props.title}</Card.Title>
         <Card.Text>{props.description}</Card.Text>
         <Card.Text>{props.description1}</Card.Text>
+        <Button variant="primary" onClick={bookAppoint}>
+          Book Appointment
+        </Button>
       </Card.Body>
     </Card>
   );
