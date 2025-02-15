@@ -19,6 +19,7 @@ const RestaurantAppointment = () => {
       const baseUrl = import.meta.env.VITE_API_BASE_URL;
       const [isPaymentComplete,setIsPaymentComplete]=useState(false);
      const [feedback,setFeedback]=useState([]);
+     const [role,setRole]=useState();
    const sendBack = async (customer) => {
      try {
        console.log("iniial id in sendBack", customer);
@@ -131,9 +132,10 @@ const RestaurantAppointment = () => {
   useEffect(() => {
     const customerData = localStorage.getItem("customer");
     if (customerData) {
-      const { id,email } = JSON.parse(customerData);
+      const { id,email,role } = JSON.parse(customerData);
       setId(id);
      setEmail(email);
+     setRole(role);
       console.log("user ID:", id);
      console.log("user Email",email);
     }
