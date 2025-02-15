@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-
+import { useNavigate } from "react-router-dom";
 
 function Cardsone(props) {
   
