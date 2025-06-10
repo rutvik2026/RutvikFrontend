@@ -16,6 +16,7 @@ const Feed = () => {
    try {
     const res = await axios.post(`${baseUrl}/v1/user/feed`, { name: name,username:username,feedback:fed,ownerId:ownerId });
     console.log(res.data);
+    alert("thank you for feedback...");
    } catch (error) {
     console.log("error in feedback",error)
    }
