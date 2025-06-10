@@ -71,7 +71,7 @@ const MyApointment = () => {
     const message = `Payment is Complete by user you have to Provide Appointment to user on time`;
     const subject = "Regarding Food Appointment on FoodApoint";
     const result = await axios.post(`${baseUrl}/v1/user/sendmassage`, {
-      to: appointment.email,
+      to: appointment.ownerEmail,
       subject: subject,
       text: message,
     });
